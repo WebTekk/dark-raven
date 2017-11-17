@@ -6,12 +6,22 @@ use Slim\Container;
 
 class HomeController extends AppController
 {
+    /**
+     * HomeController constructor.
+     *
+     * @param Container $container Container
+     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
     }
 
-    public function index()
+    /**
+     * Home index
+     *
+     * @return string Template
+     */
+    public function index() : string
     {
         $viewData = [
             'page' => 'Home',
