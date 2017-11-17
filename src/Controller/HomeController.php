@@ -9,7 +9,7 @@ class HomeController extends AppController
 {
     public function __construct(Container $container)
     {
-        parent::__construct($container->get(Engine::class));
+        parent::__construct($container->get(Engine::class), $container);
     }
 
     public function index()

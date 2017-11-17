@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use League\Plates\Engine;
+use Slim\Container;
 
 /**
  * Class AppController
@@ -10,15 +11,18 @@ use League\Plates\Engine;
 class AppController
 {
     private $engine;
+    private $container;
 
     /**
      * AppController constructor.
      *
      * @param Engine $engine
+     * @param Container $container
      */
-    public function __construct(Engine $engine)
+    public function __construct(Engine $engine, Container $container)
     {
         $this->engine = $engine;
+        $this->container = $container;
     }
 
     /**
@@ -31,8 +35,8 @@ class AppController
     public function render(string $file, array $viewData)
     {
         $default = [
-            'base' => app()->getContainer()->get('router')->pathFor("root"),
-            'canonical' => app()->getContainer()->get('canonical')
+            'base' => $this->container->get('router')->pathFor("root"),
+            'canonical' => $this->container->get('canonical')
         ];
         $viewData = array_merge_recursive($viewData, $default);
         $this->engine->addData($viewData);

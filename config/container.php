@@ -64,6 +64,9 @@ $container['connection'] = function (Container $container) {
 $container[Engine::class] = function (Container $container) {
     $path = $container->get('viewPath');
     $engine = new Engine($path, null);
+    if (!is_dir(__DIR__ . '/../public/cache')) {
+        mkdir(__DIR__ . '/../public/cache');
+    }
     $options = array(
         'minify' => true,
         'public_dir' => __DIR__ . '/../public/cache',
