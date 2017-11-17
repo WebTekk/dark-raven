@@ -2,20 +2,8 @@
 
 namespace App\Controller;
 
-use Slim\Container;
-
 class HomeController extends AppController
 {
-    /**
-     * HomeController constructor.
-     *
-     * @param Container $container Container
-     */
-    public function __construct(Container $container)
-    {
-        parent::__construct($container);
-    }
-
     /**
      * Home index
      *
