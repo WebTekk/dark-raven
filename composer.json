@@ -2,7 +2,6 @@
   "require": {
     "slim/slim": "^3.9",
     "monolog/monolog": "^1.23",
-    "slim/php-view": "^2.2",
     "cakephp/database": "^3.5",
     "league/plates": "^3.3",
     "odan/plates-data-extension": "^0.3.0",
