@@ -11,18 +11,19 @@ use Slim\Container;
 class AppController
 {
     private $engine;
-    private $container;
+    private $router;
+    private $canonical;
 
     /**
      * AppController constructor.
      *
-     * @param Engine $engine
      * @param Container $container
      */
-    public function __construct(Engine $engine, Container $container)
+    public function __construct(Container $container)
     {
-        $this->engine = $engine;
-        $this->container = $container;
+        $this->engine = $container->get(Engine::class);
+        $this->router = $container->get('router');
+        $this->canonical = $container->get('canonical');
     }
 
     /**
@@ -35,8 +36,8 @@ class AppController
     public function render(string $file, array $viewData)
     {
         $default = [
-            'base' => $this->container->get('router')->pathFor("root"),
-            'canonical' => $this->container->get('canonical')
+            'base' => $this->router->pathFor("root"),
+            'canonical' => $this->canonical,
         ];
         $viewData = array_merge_recursive($viewData, $default);
         $this->engine->addData($viewData);
