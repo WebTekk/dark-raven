@@ -9,7 +9,7 @@
     <meta name="keywords" content="Slim, template">
     <meta name=“robots” content=“nofollow”>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <base href="<?= $router->pathFor("root") ?>">
+    <base href="<?= $this->wh("base") ?>">
     <link rel="canonical" href="<?= $this->wh("canonical") ?>"/>
     <link rel="icon" href="favicon.ico">
 
@@ -20,14 +20,12 @@
 
 </head>
 <body>
-<div>
-    <div id="header">
-
-    </div>
-    <div id="content">
+<div id="header"></div>
+<div id="content">
+    <div id="container">
         <?= $this->section('content') ?>
     </div>
-    <div id="footer"></div>
+    <div id="footer">Footer</div>
 </div>
 </body>
 </html>

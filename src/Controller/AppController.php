@@ -31,7 +31,7 @@ class AppController
     public function render(string $file, array $viewData)
     {
         $default = [
-            'router' => app()->getContainer()->get('router'),
+            'base' => app()->getContainer()->get('router')->pathFor("root"),
             'canonical' => app()->getContainer()->get('canonical')
         ];
         $viewData = array_merge_recursive($viewData, $default);
