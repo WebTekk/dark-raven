@@ -3,3 +3,4 @@ config/env.php
 temp/*
 public/cache/*
 .idea
+composer.lock
