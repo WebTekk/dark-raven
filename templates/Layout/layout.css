@@ -25,9 +25,11 @@ body {
 
 #container {
     grid-area: content;
+    margin-left: 5%;
 }
 
 #footer {
     grid-area: footer;
     background-color: #202020;
+    padding-left: 5%;
 }
