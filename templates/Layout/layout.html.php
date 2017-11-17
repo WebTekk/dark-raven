@@ -20,7 +20,9 @@
 
 </head>
 <body>
-<div id="header"></div>
+<div id="header">
+
+</div>
 <div id="content">
     <div id="container">
         <?= $this->section('content') ?>
