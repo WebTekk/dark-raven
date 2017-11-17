@@ -35,7 +35,7 @@ class AppController
     {
         $this->engine = $container->get(Engine::class);
         $this->router = $container->get('router');
-            $this->canonical = $container->get('canonical');
+        $this->canonical = $container->get('settings')->get('canonical');
     }
 
     /**
@@ -45,7 +45,7 @@ class AppController
      * @param array $viewData
      * @return string rendered HTML File
      */
-    public function render(string $file, array $viewData) : string
+    public function render(string $file, array $viewData): string
     {
         $default = [
             'base' => $this->router->pathFor("root"),

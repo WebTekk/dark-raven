@@ -62,7 +62,7 @@ $container['connection'] = function (Container $container) {
  * @return Engine
  */
 $container[Engine::class] = function (Container $container) {
-    $path = $container->get('viewPath');
+    $path = $container->get('settings')->get('viewPath');
     $engine = new Engine($path, null);
     if (!is_dir(__DIR__ . '/../public/cache')) {
         mkdir(__DIR__ . '/../public/cache');
@@ -70,7 +70,7 @@ $container[Engine::class] = function (Container $container) {
     $options = array(
         'minify' => true,
         'public_dir' => __DIR__ . '/../public/cache',
-        'cache' => new FilesystemAdapter('assets-cache', 0, '/cache'),
+        'cache' => new FilesystemAdapter('assets-cache', 0, __DIR__ . '/../temp/cache'),
     );
     $engine->loadExtension(new \Odan\Asset\PlatesAssetExtension($options));
     $engine->loadExtension(new PlatesDataExtension());
