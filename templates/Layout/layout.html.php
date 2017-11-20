@@ -13,7 +13,9 @@
     <link rel="canonical" href="<?= $this->wh("canonical") ?>"/>
     <link rel="icon" href="favicon.ico">
     <script src="js/jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
     <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 
     <?= $this->section('assets') ?>
     <?= $this->assets('view::Layout/layout.css', ['inline' => false]) ?>

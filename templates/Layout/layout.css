@@ -9,6 +9,7 @@ body {
 
 a {
     text-decoration: inherit;
+    color: #E0E0E0;
 }
 
 #header {
@@ -21,7 +22,7 @@ a {
     color: #E0E0E0;
     display: grid;
     grid: "leftspace head1 head2 head3 head4 head5 head6 rightspace" 1fr
-    / 5% 3em 3em 3em 3em 3em 1fr 5%;
+    / 5% 4em 4em 4em 4em 4em 1fr 5%;
     font-size: 2em;
     text-decoration: none;
     padding: 0;
