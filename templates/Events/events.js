@@ -16,6 +16,7 @@ class Events {
 
     loadEvents() {
         let $this = this;
+        showLoader();
         let url = baseurl() + "events/load";
         $.ajax({
             type: "GET",
@@ -25,6 +26,7 @@ class Events {
         }).done(function (data) {
             console.log(data);
             $this.listEvents(data);
+            hideLoader();
         });
     };
 }

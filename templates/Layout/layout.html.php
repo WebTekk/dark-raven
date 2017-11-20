@@ -34,5 +34,10 @@
     </div>
     <div id="footer">Footer</div>
 </div>
+
+<div id="loader">
+    <div id="loading"></div>
+</div>
+
 </body>
 </html>
