@@ -1,26 +1,22 @@
-app = {};
-if (!app.events) {
-    app.events = {};
-}
-
-// Main class
-app.events.Index = function () {
-
-    /** @var app.events.Index */
-    var $this = this;
-
-    this.screen = null;
+class Events {
 
     /**
-     * Initial function
+     * Events constructor
      */
-    this.init = function () {
-        $this.screen = $("#target");
-        $this.loadEvents();
+    constructor() {
+        this.screen = $("#target");
+        this.loadEvents();
     };
 
-    this.loadEvents = function () {
-        var url = baseurl() + "events/load";
+    listEvents(data) {
+        let template = $("#event-list").html();
+        let rendered = Mustache.render(template, data);
+        this.screen.html(rendered);
+    };
+
+    loadEvents() {
+        let $this = this;
+        let url = baseurl() + "events/load";
         $.ajax({
             type: "GET",
             contentType: "application/json",
@@ -28,15 +24,14 @@ app.events.Index = function () {
             cache: false
         }).done(function (data) {
             console.log(data);
+            $this.listEvents(data);
         });
     };
-
-    this.init();
-};
+}
 
 /**
  * Start JavaScript when document is ready.
  */
 $(function () {
-    new app.events.Index();
+    new Events();
 });
