@@ -13,7 +13,6 @@ class HomeController extends AppController
     {
         $viewData = [
             'page' => 'Home',
-            'text' => 'Slim template',
         ];
         return $this->render('view::Home/home.html.php', $viewData);
     }

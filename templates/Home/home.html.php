@@ -5,7 +5,10 @@ echo $this->assets(['view::Home/home.css'], ['inline'=> false]);
 $this->stop(); ?>
 
 <?php $this->start('title');
-echo $this->e("Home");
+echo $this->wh("page");
 $this->stop(); ?>
 
 <h1>Slim template</h1>
+<div class="cssIsAwesomeBox">
+    <p class="cssIsAwesomeText">CSS IS AWESOME</p>
+</div>

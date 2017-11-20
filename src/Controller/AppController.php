@@ -48,7 +48,7 @@ class AppController
     public function render(string $file, array $viewData): string
     {
         $default = [
-            'base' => $this->router->pathFor("root"),
+            'root' => $this->router->pathFor("root"),
             'canonical' => $this->canonical,
         ];
         $viewData = array_merge_recursive($viewData, $default);

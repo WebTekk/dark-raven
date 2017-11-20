@@ -9,10 +9,10 @@
     <meta name="keywords" content="Slim, template">
     <meta name=“robots” content=“nofollow”>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <base href="<?= $this->wh("base") ?>">
+    <base href="<?= $this->wh("root") ?>">
     <link rel="canonical" href="<?= $this->wh("canonical") ?>"/>
     <link rel="icon" href="favicon.ico">
-
+    <script src="script/jquery.min.js"></script>
 
     <?= $this->section('assets') ?>
     <?= $this->assets('view::Layout/layout.css', ['inline' => false]) ?>
@@ -21,7 +21,9 @@
 </head>
 <body>
 <div id="header">
-
+    <div id="leftspace"></div>
+    <div id="head1" class="headerLink"><a href="<?= $this->wh("root") ?>">Home</a></div>
+    <div id="head2" class="headerLink"><a href="<?= $this->wh("root") ?>events">Events</a></div>
 </div>
 <div id="content">
     <div id="container">
