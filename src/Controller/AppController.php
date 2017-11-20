@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use League\Plates\Engine;
+use Slim\Collection;
 use Slim\Container;
-use Slim\Route;
+use Slim\Http\Request;
+use Slim\Http\Response;
+use Slim\Router;
 
 /**
  * Class AppController
@@ -17,14 +20,24 @@ class AppController
     private $engine;
 
     /**
-     * @var Route
+     * @var Router
      */
-    private $router;
+    protected $router;
 
     /**
-     * @var string
+     * @var Collection
      */
-    private $canonical;
+    protected $settings;
+
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var Response
+     */
+    protected $response;
 
     /**
      * AppController constructor.
@@ -35,7 +48,9 @@ class AppController
     {
         $this->engine = $container->get(Engine::class);
         $this->router = $container->get('router');
-        $this->canonical = $container->get('settings')->get('canonical');
+        $this->settings = $container->get('settings');
+        $this->request = $container->get('request');
+        $this->response = $container->get('response');
     }
 
     /**
@@ -48,8 +63,8 @@ class AppController
     public function render(string $file, array $viewData): string
     {
         $default = [
-            'root' => $this->router->pathFor("root"),
-            'canonical' => $this->canonical,
+            'root' => $this->router->pathFor('root'),
+            'canonical' => $this->settings->get('canonical'),
         ];
         $viewData = array_merge_recursive($viewData, $default);
         $this->engine->addData($viewData);

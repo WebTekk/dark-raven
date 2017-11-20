@@ -1,7 +1,6 @@
 <?php
 $app = app();
 
-$app->get('/', 'App\Controller\HomeController:index')->setName("root");
-$app->get('/events', 'App\Controller\EventController:index')->setName("events");
-$app->get('/events/load', 'App\Controller\EventController:load')->setName("loadEvents");
-
+$app->get('/', route(['App\Controller\HomeController', 'index']))->setName("root");
+$app->get('/events', route(['App\Controller\EventController', 'index']))->setName("events");
+$app->get('/events/load', route(['App\Controller\EventController', 'load']))->setName("loadEvents");

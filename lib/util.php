@@ -31,3 +31,14 @@ function is_email($email)
 {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
+
+/**
+ * Make routes callable
+ *
+ * @param callable $route Route
+ * @return string Imploded route
+ */
+function route(callable $route)
+{
+    return implode(':', (array)$route);
+}

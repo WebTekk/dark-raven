@@ -27,8 +27,8 @@ $container['environment'] = function () {
  * @param Container $container
  * @return Connection
  */
-$container['connection'] = function (Container $container) {
-    $config = $container->get('db');
+$container[Connection::class] = function (Container $container) {
+    $config = $container->get('settings')->get('db');
     $driver = new Mysql([
         'host' => $config['host'],
         'port' => $config['port'],
@@ -68,7 +68,7 @@ $container[Engine::class] = function (Container $container) {
         mkdir(__DIR__ . '/../public/cache');
     }
     $options = array(
-        'minify' => true,
+        'minify' => false,
         'public_dir' => __DIR__ . '/../public/cache',
         'cache' => new FilesystemAdapter('assets-cache', 0, __DIR__ . '/../temp/cache'),
     );
