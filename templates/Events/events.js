@@ -20,7 +20,15 @@ app.events.Index = function () {
     };
 
     this.loadEvents = function () {
-        alert('hi');
+        var url = baseurl() + "events/load";
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: url,
+            cache: false
+        }).done(function (data) {
+            console.log(data);
+        });
     };
 
     this.init();

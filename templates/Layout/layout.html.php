@@ -12,7 +12,8 @@
     <base href="<?= $this->wh("root") ?>">
     <link rel="canonical" href="<?= $this->wh("canonical") ?>"/>
     <link rel="icon" href="favicon.ico">
-    <script src="script/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/script.js"></script>
 
     <?= $this->section('assets') ?>
     <?= $this->assets('view::Layout/layout.css', ['inline' => false]) ?>

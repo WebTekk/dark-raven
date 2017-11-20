@@ -23,4 +23,9 @@ class EventController extends AppController
         ];
         return $this->render('view::Events/events.html.php', $viewData);
     }
+
+    public function load()
+    {
+        return json_encode(['test' => 'test']);
+    }
 }
