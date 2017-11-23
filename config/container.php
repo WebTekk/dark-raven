@@ -6,12 +6,13 @@ use League\Plates\Engine;
 use Odan\Plates\Extension\PlatesDataExtension;
 use Slim\Container;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use SlimSession\Helper as SessionHelper;
 
 $app = app();
 $container = $app->getContainer();
 
 /**
- * Environment Container (for routes).
+ * Environment container (for routes).
  *
  * @return \Slim\Http\Environment
  */
@@ -56,7 +57,7 @@ $container[Connection::class] = function (Container $container) {
 };
 
 /**
- * Render Engine Container.
+ * Render engine container.
  *
  * @param Container $container
  * @return Engine
@@ -76,4 +77,13 @@ $container[Engine::class] = function (Container $container) {
     $engine->loadExtension(new PlatesDataExtension());
     $engine->addFolder('view', $path);
     return $engine;
+};
+
+/**
+ * Session container.
+ *
+ * @return SessionHelper
+ */
+$container[SessionHelper::class] = function (){
+    return new SessionHelper();
 };

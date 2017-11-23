@@ -21,6 +21,16 @@ $config['canonical'] = 'https://www.tekk.ch';
 
 $config['viewPath'] = __DIR__ . '/../templates';
 
+$config['session'] = [
+    'name' => 'slim_template',
+    'autorefresh' => true,
+    'lifetime' => '2 hours',
+    'path' => '/', //default
+    'domain' => null, //default
+    'secure' => false, //default
+    'httponly' => false, //default
+];
+
 if (file_exists(__DIR__ . '/../../env.php')) {
     $env = require_once(__DIR__ . '/../../env.php');
 } elseif (file_exists(__DIR__ . '/env.php')) {

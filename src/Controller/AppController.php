@@ -8,12 +8,18 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
+use SlimSession\Helper as SessionHelper;
 
 /**
  * Class AppController
  */
 class AppController
 {
+    /**
+     * @var SessionHelper
+     */
+    protected $session;
+
     /**
      * @var Engine
      */
@@ -51,6 +57,7 @@ class AppController
         $this->settings = $container->get('settings');
         $this->request = $container->get('request');
         $this->response = $container->get('response');
+        $this->session = $container->get(SessionHelper::class);
     }
 
     /**
