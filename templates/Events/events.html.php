@@ -11,12 +11,12 @@ $this->stop(); ?>
 
 <h1>Events</h1>
 
-<table>
-    <thead>
+<table class="table">
+    <thead class="thead-dark">
     <tr>
-        <th>Name</th>
-        <th>Date</th>
-        <th>Location</th>
+        <th scope="col">Name</th>
+        <th scope="col">Date</th>
+        <th scope="col">Location</th>
     </tr>
     </thead>
     <tbody id="target"></tbody>

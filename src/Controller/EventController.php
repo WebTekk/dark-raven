@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Repository\EventRepository;
 use App\Table\EventTable;
 use Cake\Database\Connection;
 use Slim\Container;
@@ -45,8 +46,8 @@ class EventController extends AppController
      */
     public function load()
     {
-        $eventTable = new EventTable($this->db);
-        $events = $eventTable->getEvents();
+        $eventRepo = new EventRepository($this->db);
+        $events = $eventRepo->getEvents();
         return $this->response->withJson(['events' => $events]);
     }
 }

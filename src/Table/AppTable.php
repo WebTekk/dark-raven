@@ -37,7 +37,7 @@ class AppTable
      *
      * @return Query
      */
-    public function newQuery()
+    public function newSelect()
     {
         return $this->db->newQuery()->from($this->table);
     }
