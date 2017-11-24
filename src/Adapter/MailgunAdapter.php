@@ -24,12 +24,7 @@ class MailgunAdapter
 
     public function sendMail($from, $to, $subject, $text)
     {
-        # First, instantiate the SDK with your API credentials
-        $mg = $this->mailgun;
-
-        # Now, compose and send your message.
-        # $mg->messages()->send($domain, $params);
-        $mg->messages()->send($this->domain, [
+        $this->mailgun->messages()->send($this->domain, [
             'from' => $from,
             'to' => $to,
             'subject' => $subject,
