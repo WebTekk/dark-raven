@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 use App\Repository\EventRepository;
-use App\Table\EventTable;
 use Cake\Database\Connection;
 use Slim\Container;
 use Slim\Http\Response;

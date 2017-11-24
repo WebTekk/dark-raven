@@ -3,6 +3,8 @@
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use League\Plates\Engine;
+use Mailgun\HttpClientConfigurator;
+use Mailgun\Mailgun;
 use Odan\Plates\Extension\PlatesDataExtension;
 use Slim\Container;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -86,4 +88,11 @@ $container[Engine::class] = function (Container $container) {
  */
 $container[SessionHelper::class] = function (){
     return new SessionHelper();
+};
+
+$container[Mailgun::class] = function (Container $container){
+    $mailgunSettings = $container->get('settings')->get('mailgun');
+    $mg = Mailgun::create($mailgunSettings['api-key']);
+    $mg->domains()->connection($mailgunSettings['domain']);
+    return $mg;
 };

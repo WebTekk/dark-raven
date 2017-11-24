@@ -31,6 +31,12 @@ $config['session'] = [
     'httponly' => false, //default
 ];
 
+$config['mailgun'] = [
+    'from' => '',
+    'domain' => '',
+    'api-key' => '',
+];
+
 if (file_exists(__DIR__ . '/../../env.php')) {
     $env = require_once(__DIR__ . '/../../env.php');
 } elseif (file_exists(__DIR__ . '/env.php')) {
@@ -39,6 +45,6 @@ if (file_exists(__DIR__ . '/../../env.php')) {
     $env = [];
 }
 
-$config = array_merge_recursive($config, $env);
+$config = array_replace_recursive($config, $env);
 
 return $config;
