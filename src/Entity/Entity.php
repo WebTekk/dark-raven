@@ -26,7 +26,7 @@ class Entity
      *
      * @return Hydrator Hydrator
      */
-    protected function getHydrator()
+    protected function getHydrator(): Hydrator
     {
         static $hydrator = null;
         if (!$hydrator) {
@@ -41,7 +41,7 @@ class Entity
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->getHydrator()->extract($this);
     }
@@ -51,7 +51,7 @@ class Entity
      *
      * @return string Json
      */
-    public function toJson()
+    public function toJson(): string
     {
         return json_encode($this->toArray());
     }

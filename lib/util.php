@@ -27,7 +27,7 @@ function app(): App
  *
  * @return mixed
  */
-function is_email($email)
+function is_email(string $email): mixed
 {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
@@ -38,7 +38,7 @@ function is_email($email)
  * @param callable $route Route
  * @return string Imploded route
  */
-function route(callable $route)
+function route(callable $route): string
 {
     return implode(':', (array)$route);
 }

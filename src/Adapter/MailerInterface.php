@@ -2,7 +2,9 @@
 
 namespace App\Adapter;
 
-
+/**
+ * Interface MailerInterface
+ */
 interface MailerInterface
 {
     /**

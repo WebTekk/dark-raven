@@ -2,7 +2,9 @@
 
 namespace App\Adapter;
 
-
+/**
+ * Class MailerNullAdapter
+ */
 class MailerNullAdapter implements MailerInterface
 {
     /**

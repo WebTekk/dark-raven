@@ -8,6 +8,9 @@ use Cake\Database\Connection;
 use Slim\Container;
 use Slim\Http\Response;
 
+/**
+ * Class EventController
+ */
 class EventController extends AppController
 {
     /**

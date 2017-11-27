@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: marc.wilhelm
- * Date: 20.11.2017
- * Time: 16:50
- */
 
 namespace App\Repository;
 
@@ -13,6 +7,9 @@ use App\Entity\Event;
 use App\Table\EventTable;
 use Cake\Database\Connection;
 
+/**
+ * Class EventRepository
+ */
 class EventRepository
 {
     /**
@@ -34,7 +31,7 @@ class EventRepository
      *
      * @return Event[] Array of event objects
      */
-    public function getEvents()
+    public function getEvents(): array
     {
         $table = new EventTable($this->db);
         $query = $table->newSelect();

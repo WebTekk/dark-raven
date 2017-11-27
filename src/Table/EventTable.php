@@ -2,7 +2,9 @@
 
 namespace App\Table;
 
-
+/**
+ * Class EventTable
+ */
 class EventTable extends AppTable
 {
     /**

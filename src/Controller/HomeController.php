@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+/**
+ * Class HomeController
+ */
 class HomeController extends AppController
 {
     /**

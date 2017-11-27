@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: marc.wilhelm
- * Date: 24.11.2017
- * Time: 10:11
- */
 
 namespace App\Controller;
 
 use App\Adapter\MailerInterface;
 use Slim\Container;
 
+/**
+ * Class MailingController
+ */
 class MailingController extends AppController
 {
     /**
@@ -33,7 +30,7 @@ class MailingController extends AppController
      *
      * @return void
      */
-    public function mail()
+    public function mail(): void
     {
         $mailgunAdapter = $this->mailer;
         $mailgunAdapter->sendMail('tekk@tekk.ch', 'Mailgun Subject', 'Mailgun text!');

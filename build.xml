@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="webapp" default="noop">
+
+    <target name="noop"/>
+    <property environment="env"/>
+
+    <condition property="is_windows">
+        <os family="windows"/>
+    </condition>
+
+    <tstamp>
+        <format property="now" pattern="yyyy-MM-dd HH:mm:ss" locale="en,UK"/>
+        <format property="now_num" pattern="yyyyMMddHHmmss" locale="en,UK"/>
+        <format property="now_file" pattern="yyyy-MM-dd_HHmmss" locale="en,UK"/>
+    </tstamp>
+
+    <!-- By default, we assume all tools to be on the $PATH -->
+    <condition property="ext" value=".bat">
+        <os family="windows"/>
+    </condition>
+    <condition property="ext" value="">
+        <os family="Unix"/>
+    </condition>
+
+    <!-- DISPLAYS WINDOWS OS -->
+    <target name="display_windows" if="is_windows">
+        <echo message="OS Family is: Windows"/>
+    </target>
+
+    <target name="apigen" description="Generate API documentation using ApiGen">
+        <delete dir="${basedir}/build/api"/>
+        <mkdir dir="${basedir}/build/api"/>
+        <exec executable="${basedir}/vendor/bin/apigen${ext}" searchpath="true" resolveexecutable="true"
+              failonerror="true">
+            <arg line="generate -s ${basedir} -d ${basedir}/build/api --exclude vendor --exclude build"/>
+        </exec>
+    </target>
+
+    <target name="phpstan" description="Test code for errors">
+        <mkdir dir="${basedir}/build"/>
+        <get src="https://github.com/phpstan/phpstan/releases/download/0.8/phpstan.phar"
+             dest="${basedir}/build/phpstan.phar" skipexisting="true"/>
+        <exec executable="php" failonerror="true">
+            <arg line="${basedir}/build/phpstan.phar analyse --no-progress --level=5 -c phpstan.neon src"/>
+        </exec>
+        <exec executable="php" failonerror="true">
+            <arg line="${basedir}/build/phpstan.phar analyse --no-progress --level=4 -c phpstan.neon tests"/>
+        </exec>
+    </target>
+
+    <target name="doc8" description="Docblock check">
+        <exec executable="${basedir}/vendor/bin/phpdoccheck${ext}" failonerror="true">
+            <arg line="-d ${basedir}/src"/>
+        </exec>
+    </target>
+
+    <target name="deploy" description="Build Project">
+
+        <!-- Chose between test, staging and prod environment -->
+        <input message="Which config should be used?"
+               validArgs="test,staging,prod"
+               addproperty="config"
+        />
+        <!-- Load properties -->
+        <property file="${basedir}/config/${config}.ant.properties"/>
+
+        <!-- Get composer.phar if not existing -->
+        <get src="https://getcomposer.org/composer.phar" dest="${basedir}/build/composer.phar" skipexisting="true"/>
+
+        <!-- Delete build/master -->
+        <delete dir="${basedir}/build/master"/>
+
+        <!-- Get master branch from GitHub -->
+        <exec executable="git" failonerror="true">
+            <arg line="archive --format zip --output ${basedir}/build/master.zip master"/>
+        </exec>
+
+        <!-- Unzip master branch -->
+        <unzip src="${basedir}/build/master.zip" dest="${basedir}/build/master/"/>
+
+        <!-- Delete zipped master branch -->
+        <delete file="${basedir}/build/master.zip"/>
+
+        <!-- Install composer packages -->
+        <exec executable="php" failonerror="true">
+            <arg line="${basedir}/build/composer.phar install --no-dev --optimize-autoloader -d ${basedir}/build/master"/>
+        </exec>
+
+        <!-- Remove folder which aren't needed on the server -->
+        <delete dir="${basedir}/build/master/tests"/>
+        <delete file="${basedir}/build/master/.gitignore"/>
+        <delete file="${basedir}/build/master/.styleci.yml"/>
+        <delete file="${basedir}/build/master/build.xml"/>
+        <delete file="${basedir}/build/master/phpstan.neon"/>
+        <delete file="${basedir}/build/master/README.md"/>
+        <delete file="${basedir}/build/master/composer.json"/>
+        <delete file="${basedir}/build/master/composer.lock"/>
+        <delete file="${basedir}/build/master/config/prod.ant.properties"/>
+        <delete file="${basedir}/build/master/config/test.ant.properties"/>
+        <delete file="${basedir}/build/master/config/staging.ant.properties"/>
+        <delete file="${basedir}/build/master/config/ant.example.properties"/>
+        <delete dir="${basedir}/build/master/vendor/phpstan"/>
+        <delete dir="${basedir}/build/master/vendor/monolog/monolog/doc"/>
+        <delete dir="${basedir}/build/master/vendor/monolog/monolog/tests"/>
+        <delete dir="${basedir}/build/master/vendor/dflydev/dot-access-data/tests"/>
+        <delete dir="${basedir}/build/master/vendor/league/plates/docs"/>
+        <delete dir="${basedir}/build/master/vendor/league/plates/examples"/>
+        <delete dir="${basedir}/build/master/vendor/phpmailer/phpmailer/examples"/>
+        <delete dir="${basedir}/build/master/vendor/symfony/cache/Tests"/>
+        <delete dir="${basedir}/build/master/vendor/symfony/http-foundation/Tests"/>
+        <delete dir="${basedir}/build/master/vendor/symfony/routing/Tests"/>
+        <delete dir="${basedir}/build/master/vendor/symfony/translation/Tests"/>
+
+        <!-- PHP lint test -->
+        <antcall target="phplinttest">
+            <param name="path" value="build/master/"/>
+        </antcall>
+
+        <!-- PHPUnit test -->
+        <antcall target="phpunit">
+            <param name="path" value="build/master/"/>
+        </antcall>
+
+        <!-- PHPStan test -->
+        <antcall target="phpstan">
+            <param name="path" value="build/master/"/>
+        </antcall>
+
+        <!-- Create timestamp -->
+        <tstamp>
+            <format property="time.stamp" pattern="yyyy-MM-dd_HH-mm-ss"/>
+        </tstamp>
+
+        <!-- Set zipFileName from build.filename and timestamp -->
+        <property name="zipFileName" value="${build.filename}_${time.stamp}.zip"/>
+
+        <!-- Zip master brunch -->
+        <zip destfile="${basedir}/build/${zipFileName}">
+            <zipfileset dir="${basedir}/build/master"/>
+        </zip>
+
+        <!-- Upload zip file-->
+        <echo message="Uploading ${zipFileName}"/>
+        <scp file="${basedir}/build/${zipFileName}"
+             todir="${build.ftp.username}:${build.ftp.password}@${build.ftp.host}:${build.ftp.path}"
+             trust="true"/>
+
+        <!-- Upload deploy.php -->
+        <echo message="Uploading deploy.php"/>
+        <scp file="${basedir}/build/master/config/deploy.php"
+             todir="${build.ftp.username}:${build.ftp.password}@${build.ftp.host}:${build.ftp.path}"
+             trust="true"/>
+
+        <!-- Execute deploy.php on the server -->
+        <sshexec host="${build.ftp.host}"
+                 username="${build.ftp.username}"
+                 password="${build.ftp.password}"
+                 command="cd ${build.ftp.path};php deploy.php ${zipFileName}"
+                 trust="true"
+        />
+
+        <!-- Delete build/master -->
+        <delete dir="${basedir}/build/master"/>
+    </target>
+
+    <target name="migrations" description="Generate database migrations">
+        <condition property="ending" value=".bat" else="">
+            <os family="windows"/>
+        </condition>
+        <input message="Migration name" addproperty="migrationName"/>
+        <exec executable="${basedir}/vendor/bin/phinx-migrations${ending}" dir="${basedir}/config" osfamily="windows">
+            <arg line="generate --name ${migrationName} --overwrite"/>
+        </exec>
+    </target>
+
+    <target name="phplinttest">
+        <apply executable="php" failonerror="true" verbose="true">
+            <arg value="-l"/>
+            <fileset dir="${basedir}/${path}">
+                <include name="**/config/*.php"/>
+                <include name="**/src/**/*.php"/>
+                <exclude name="**/vendor/**"/>
+                <modified/>
+            </fileset>
+        </apply>
+    </target>
+
+    <target name="lint">
+        <antcall target="phplinttest">
+            <param name="path" value=""/>
+        </antcall>
+    </target>
+
+    <target name="phpunit" description="Run unit tests with PHPUnit">
+        <exec executable="${basedir}/vendor/bin/phpunit${ext}" searchpath="true" resolveexecutable="true"
+              failonerror="true" taskname="phpunit">
+            <arg value="--configuration"/>
+            <arg path="${basedir}/phpunit.xml"/>
+        </exec>
+    </target>
+
+    <target name="phpunit-actual" description="Run unit tests with class actual with PHPUnit">
+        <exec executable="${basedir}/vendor/bin/phpunit${ext}" searchpath="true" resolveexecutable="true"
+              failonerror="true" taskname="phpunit">
+            <arg value="--configuration"/>
+            <arg path="${basedir}/phpunit.xml"/>
+            <arg value="--group"/>
+            <arg value="actual"/>
+        </exec>
+    </target>
+
+    <target name="phpunit-coverage" description="Run unit tests with PHPUnit with coverage">
+        <delete dir="${basedir}/build/coverage"/>
+        <mkdir dir="${basedir}/build/coverage"/>
+        <exec executable="vendor/bin/phpunit${ext}" searchpath="true" resolveexecutable="true" failonerror="true" taskname="phpunit-coverage">
+            <arg value="--configuration"/>
+            <arg path="${basedir}/phpunit.xml"/>
+            <arg value="--coverage-clover"/>
+            <arg path="${basedir}/build/logs/coverage.clover"/>
+            <arg value="--coverage-html"/>
+            <arg path="${basedir}/build/coverage"/>
+        </exec>
+    </target>
+
+    <target name="validate" description="Run all tests">
+        <antcall target="phplinttest">
+            <param name="path" value=""/>
+        </antcall>
+        <antcall target="phpstan">
+            <param name="path" value=""/>
+        </antcall>
+        <antcall target="phpunit">
+            <param name="path" value=""/>
+        </antcall>
+        <antcall target="doc8">
+            <param name="path" value=""/>
+        </antcall>
+    </target>
+</project>

@@ -5,7 +5,6 @@ use App\Adapter\MailgunAdapter;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use League\Plates\Engine;
-use Mailgun\HttpClientConfigurator;
 use Mailgun\Mailgun;
 use Odan\Plates\Extension\PlatesDataExtension;
 use Slim\Container;

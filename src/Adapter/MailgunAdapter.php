@@ -4,6 +4,9 @@ namespace App\Adapter;
 
 use Mailgun\Mailgun;
 
+/**
+ * Class MailgunAdapter
+ */
 class MailgunAdapter implements MailerInterface
 {
     /**

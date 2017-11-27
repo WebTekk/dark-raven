@@ -1,0 +1,5 @@
+parameters:
+    fileExtensions:
+        - php
+    excludes_analyse:
+        - *.html.php
