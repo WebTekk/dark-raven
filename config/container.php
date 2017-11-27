@@ -1,5 +1,7 @@
 <?php
 
+use App\Adapter\MailerInterface;
+use App\Adapter\MailgunAdapter;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use League\Plates\Engine;
@@ -82,17 +84,23 @@ $container[Engine::class] = function (Container $container) {
 };
 
 /**
- * Session container.
+ * Session container
  *
  * @return SessionHelper
  */
-$container[SessionHelper::class] = function (){
+$container[SessionHelper::class] = function () {
     return new SessionHelper();
 };
 
-$container[Mailgun::class] = function (Container $container){
+/**
+ * Mailer container
+ *
+ * @param Container $container
+ * @return MailerInterface
+ */
+$container[MailerInterface::class] = function (Container $container) {
     $mailgunSettings = $container->get('settings')->get('mailgun');
-    $mg = Mailgun::create($mailgunSettings['api-key']);
-    $mg->domains()->connection($mailgunSettings['domain']);
-    return $mg;
+    $mailgun = Mailgun::create($mailgunSettings['api-key']);
+    $mailgunAdapter = new MailgunAdapter($mailgunSettings['domain'], $mailgun, $mailgunSettings['from']);
+    return $mailgunAdapter;
 };

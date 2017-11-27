@@ -8,21 +8,15 @@
 
 namespace App\Controller;
 
-use App\Adapter\MailgunAdapter;
-use Mailgun\Mailgun;
+use App\Adapter\MailerInterface;
 use Slim\Container;
 
 class MailingController extends AppController
 {
     /**
-     * @var array
+     * @var MailerInterface
      */
-    protected $mailgunSettings;
-
-    /**
-     * @var Mailgun
-     */
-    protected $mailgun;
+    protected $mailer;
 
     /**
      * EventController constructor.
@@ -31,8 +25,7 @@ class MailingController extends AppController
     public function __construct(Container $container)
     {
         parent::__construct($container);
-        $this->mailgunSettings = $container->get('settings')->get('mailgun');
-        $this->mailgun = $container->get(Mailgun::class);
+        $this->mailer = $container->get(MailerInterface::class);
     }
 
     /**
@@ -42,7 +35,7 @@ class MailingController extends AppController
      */
     public function mail()
     {
-        $mailgunAdapter = new MailgunAdapter($this->mailgunSettings['domain'], $this->mailgun);
-        $mailgunAdapter->sendMail($this->mailgunSettings['from'], 'tekk@tekk.ch', 'Mailgun Subject', 'Mailgun text!');
+        $mailgunAdapter = $this->mailer;
+        $mailgunAdapter->sendMail('tekk@tekk.ch', 'Mailgun Subject', 'Mailgun text!');
     }
 }

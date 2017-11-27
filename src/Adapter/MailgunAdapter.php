@@ -4,7 +4,7 @@ namespace App\Adapter;
 
 use Mailgun\Mailgun;
 
-class MailgunAdapter
+class MailgunAdapter implements MailerInterface
 {
     /**
      * @var Mailgun
@@ -17,15 +17,21 @@ class MailgunAdapter
     protected $domain;
 
     /**
+     * @var string
+     */
+    protected $from;
+
+    /**
      * MailgunAdapter constructor.
      *
      * @param string $domain Domain
      * @param Mailgun $mailgun Mailgun
      */
-    public function __construct($domain, Mailgun $mailgun)
+    public function __construct(string $domain, Mailgun $mailgun, string $from)
     {
         $this->mailgun = $mailgun;
         $this->domain = $domain;
+        $this->from = $from;
     }
 
     /**
@@ -35,15 +41,20 @@ class MailgunAdapter
      * @param string $to Receiver
      * @param string $subject Mail subject
      * @param string $text Mail text
-     * @return void
+     * @return bool
      */
-    public function sendMail($from, $to, $subject, $text)
+    public function sendMail(string $to, string $subject, string $text, ?string $from = null): bool
     {
+        if (empty($from)) {
+            $from = $this->from;
+        }
+
         $this->mailgun->messages()->send($this->domain, [
             'from' => $from,
             'to' => $to,
             'subject' => $subject,
             'text' => $text,
         ]);
+        return true;
     }
 }
