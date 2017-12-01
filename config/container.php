@@ -125,12 +125,12 @@ $container[Translator::class] = function (Container $container): Translator {
     $session = $container->get(SessionHelper::class);
     $locale = $session->get('lang');
     if (empty($locale)) {
-        $locale = 'DE';
-        $session->set('lang', 'DE');
+        $locale = 'en_GB';
+        $session->set('lang', 'en_GB');
     }
     $resource = __DIR__ . "/../resources/locale/" . $locale . "_messages.mo";
     $translator = new Translator($locale, new MessageSelector());
-    $translator->setFallbackLocales(['EN']);
+    $translator->setFallbackLocales(['en_GB']);
     $translator->addLoader('mo', new MoFileLoader());
     $translator->addResource('mo', $resource, $locale);
     $translator->setLocale($locale);
