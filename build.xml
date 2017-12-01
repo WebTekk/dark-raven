@@ -48,10 +48,82 @@
         </exec>
     </target>
 
-    <target name="doc8" description="Docblock check">
-        <exec executable="${basedir}/vendor/bin/phpdoccheck${ext}" failonerror="true">
-            <arg line="-d ${basedir}/src"/>
+    <target name="fast-build" description="Fast build">
+
+        <!-- Get composer.phar if not existing -->
+        <get src="https://getcomposer.org/composer.phar" dest="${basedir}/build/composer.phar" skipexisting="true"/>
+
+        <!-- Delete build/master -->
+        <delete dir="${basedir}/build/master"/>
+
+        <!-- Get master branch from GitHub -->
+        <exec executable="git" failonerror="true">
+            <arg line="archive --format zip --output ${basedir}/build/master.zip master"/>
         </exec>
+
+        <!-- Unzip master branch -->
+        <unzip src="${basedir}/build/master.zip" dest="${basedir}/build/master/"/>
+
+        <!-- Delete zipped master branch -->
+        <delete file="${basedir}/build/master.zip"/>
+
+        <!-- Install composer packages -->
+        <exec executable="php" failonerror="true">
+            <arg line="${basedir}/build/composer.phar install --no-dev --optimize-autoloader -d ${basedir}/build/master"/>
+        </exec>
+
+        <!-- Remove folder which aren't needed on the server -->
+        <delete dir="${basedir}/build/master/tests"/>
+        <delete file="${basedir}/build/master/.gitignore"/>
+        <delete file="${basedir}/build/master/.styleci.yml"/>
+        <delete file="${basedir}/build/master/build.xml"/>
+        <delete file="${basedir}/build/master/phpstan.neon"/>
+        <delete file="${basedir}/build/master/README.md"/>
+        <delete file="${basedir}/build/master/composer.json"/>
+        <delete file="${basedir}/build/master/composer.lock"/>
+        <delete file="${basedir}/build/master/config/prod.ant.properties"/>
+        <delete file="${basedir}/build/master/config/test.ant.properties"/>
+        <delete file="${basedir}/build/master/config/staging.ant.properties"/>
+        <delete file="${basedir}/build/master/config/ant.example.properties"/>
+        <delete dir="${basedir}/build/master/vendor/phpstan"/>
+        <delete dir="${basedir}/build/master/vendor/monolog/monolog/doc"/>
+        <delete dir="${basedir}/build/master/vendor/monolog/monolog/tests"/>
+        <delete dir="${basedir}/build/master/vendor/dflydev/dot-access-data/tests"/>
+        <delete dir="${basedir}/build/master/vendor/league/plates/docs"/>
+        <delete dir="${basedir}/build/master/vendor/league/plates/examples"/>
+        <delete dir="${basedir}/build/master/vendor/phpmailer/phpmailer/examples"/>
+        <delete dir="${basedir}/build/master/vendor/symfony/cache/Tests"/>
+        <delete dir="${basedir}/build/master/vendor/symfony/http-foundation/Tests"/>
+        <delete dir="${basedir}/build/master/vendor/symfony/routing/Tests"/>
+        <delete dir="${basedir}/build/master/vendor/symfony/translation/Tests"/>
+
+        <!-- PHP lint test -->
+        <antcall target="phplinttest">
+            <param name="path" value="build/master/"/>
+        </antcall>
+
+        <!-- PHPUnit test -->
+        <antcall target="phpunit">
+            <param name="path" value="build/master/"/>
+        </antcall>
+
+        <!-- PHPStan test -->
+        <antcall target="phpstan">
+            <param name="path" value="build/master/"/>
+        </antcall>
+
+        <!-- Create timestamp -->
+        <tstamp>
+            <format property="time.stamp" pattern="yyyy-MM-dd_HH-mm-ss"/>
+        </tstamp>
+
+        <!-- Set zipFileName from build.filename and timestamp -->
+        <property name="zipFileName" value="${build.filename}_${time.stamp}.zip"/>
+
+        <!-- Zip master brunch -->
+        <zip destfile="${basedir}/build/${zipFileName}">
+            <zipfileset dir="${basedir}/build/master"/>
+        </zip>
     </target>
 
     <target name="deploy" description="Build Project">
