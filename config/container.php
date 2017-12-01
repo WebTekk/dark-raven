@@ -120,14 +120,14 @@ $container[MailerInterface::class] = function (Container $container) {
  *
  * @param Container $container
  * @return Translator $translator
- * @throws \Interop\Container\Exception\ContainerException
+ * @throws ContainerException
  */
 $container[Translator::class] = function (Container $container): Translator {
     $session = $container->get(SessionHelper::class);
     $locale = $session->get('lang');
     if (empty($locale)) {
         $locale = 'en_US';
-        $session->set('lang', 'en_US');
+        $session->set('lang', $locale);
     }
     $resource = __DIR__ . "/../resources/locale/" . $locale . "_messages.mo";
     $translator = new Translator($locale, new MessageSelector());
