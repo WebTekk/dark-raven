@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use Interop\Container\Exception\ContainerException;
 use League\Plates\Engine;
 use Slim\Collection;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
+use Slim\Views\Twig;
 use SlimSession\Helper as SessionHelper;
 
 /**
@@ -21,9 +23,9 @@ class AppController
     protected $session;
 
     /**
-     * @var Engine
+     * @var Twig
      */
-    private $engine;
+    private $twig;
 
     /**
      * @var Router
@@ -49,10 +51,11 @@ class AppController
      * AppController constructor.
      *
      * @param Container $container Container
+     * @throws ContainerException
      */
     public function __construct(Container $container)
     {
-        $this->engine = $container->get(Engine::class);
+        $this->twig = $container->get(Twig::class);
         $this->router = $container->get('router');
         $this->settings = $container->get('settings');
         $this->request = $container->get('request');
@@ -65,16 +68,15 @@ class AppController
      *
      * @param string $file
      * @param array $viewData
-     * @return string rendered HTML File
+     * @return Response
      */
-    public function render(string $file, array $viewData): string
+    public function render(string $file, array $viewData): Response
     {
         $default = [
             'root' => $this->router->pathFor('root'),
             'canonical' => $this->settings->get('canonical'),
         ];
         $viewData = array_merge_recursive($viewData, $default);
-        $this->engine->addData($viewData);
-        return $this->engine->render($file, $viewData);
+        return $this->twig->render($this->response, $file, $viewData);
     }
 }

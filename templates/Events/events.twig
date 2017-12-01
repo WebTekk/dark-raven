@@ -1,0 +1,31 @@
+{% extends "Layout/layout.twig" %}
+
+{% block assets %}
+    {{ assets({files: ['Events/events.css'], name: 'events.css'}) }}
+    {{ assets({files: ['Events/events.js'], name: 'events.js'}) }}
+{% endblock %}
+
+{% block content %}
+<h1>Events</h1>
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Date</th>
+        <th scope="col">Location</th>
+    </tr>
+    </thead>
+    <tbody id="target"></tbody>
+</table>
+
+{#<script id="event-list" type="text/html">#}
+    {#{{#events}}#}
+    {#<tr data-id="{{id}}">#}
+        {#<td>{{name}}</td>#}
+        {#<td>{{date}}</td>#}
+        {#<td>{{location}}</td>#}
+    {#</tr>#}
+    {#{{/events}}#}
+{#</script>#}
+{% endblock %}

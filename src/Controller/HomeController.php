@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Slim\Http\Response;
+
 /**
  * Class HomeController
  */
@@ -10,13 +12,13 @@ class HomeController extends AppController
     /**
      * Home index
      *
-     * @return string Template
+     * @return Response
      */
-    public function index() : string
+    public function index() : Response
     {
         $viewData = [
             'page' => 'Home',
         ];
-        return $this->render('view::Home/home.html.php', $viewData);
+        return $this->render('Home/home.twig', $viewData);
     }
 }

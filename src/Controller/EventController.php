@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Repository\EventRepository;
 use Cake\Database\Connection;
+use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 use Slim\Http\Response;
 
@@ -21,6 +22,7 @@ class EventController extends AppController
     /**
      * EventController constructor.
      * @param Container $container Container
+     * @throws ContainerException
      */
     public function __construct(Container $container)
     {
@@ -31,14 +33,14 @@ class EventController extends AppController
     /**
      * Home index
      *
-     * @return string Template
+     * @return Response Template
      */
-    public function index(): string
+    public function index(): Response
     {
         $viewData = [
             'page' => 'Events',
         ];
-        return $this->render('view::Events/events.html.php', $viewData);
+        return $this->render('Events/events.twig', $viewData);
     }
 
     /**
@@ -46,7 +48,7 @@ class EventController extends AppController
      *
      * @return Response
      */
-    public function load()
+    public function load() : Response
     {
         $eventRepo = new EventRepository($this->db);
         $events = $eventRepo->getEvents();

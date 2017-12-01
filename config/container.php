@@ -4,10 +4,12 @@ use App\Adapter\MailerInterface;
 use App\Adapter\MailgunAdapter;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
+use Interop\Container\Exception\ContainerException;
 use League\Plates\Engine;
 use Mailgun\Mailgun;
 use Odan\Plates\Extension\PlatesDataExtension;
 use Slim\Container;
+use Slim\Views\Twig;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use SlimSession\Helper as SessionHelper;
 
@@ -30,6 +32,7 @@ $container['environment'] = function () {
  *
  * @param Container $container
  * @return Connection
+ * @throws ContainerException
  */
 $container[Connection::class] = function (Container $container) {
     $config = $container->get('settings')->get('db');
@@ -64,22 +67,53 @@ $container[Connection::class] = function (Container $container) {
  *
  * @param Container $container
  * @return Engine
+ * @throws ContainerException
  */
-$container[Engine::class] = function (Container $container) {
-    $path = $container->get('settings')->get('viewPath');
-    $engine = new Engine($path, null);
-    if (!is_dir(__DIR__ . '/../public/cache')) {
-        mkdir(__DIR__ . '/../public/cache');
-    }
-    $options = array(
-        'minify' => false,
-        'public_dir' => __DIR__ . '/../public/cache',
-        'cache' => new FilesystemAdapter('assets-cache', 0, __DIR__ . '/../temp/cache'),
-    );
-    $engine->loadExtension(new \Odan\Asset\PlatesAssetExtension($options));
-    $engine->loadExtension(new PlatesDataExtension());
-    $engine->addFolder('view', $path);
-    return $engine;
+//$container[Engine::class] = function (Container $container) {
+//    $path = $container->get('settings')->get('viewPath');
+//    $engine = new Engine($path, null);
+//    if (!is_dir(__DIR__ . '/../public/cache')) {
+//        mkdir(__DIR__ . '/../public/cache');
+//    }
+//    $options = array(
+//        'minify' => false,
+//        'public_dir' => __DIR__ . '/../public/cache',
+//        'cache' => new FilesystemAdapter('assets-cache', 0, __DIR__ . '/../temp/cache'),
+//    );
+//    $engine->loadExtension(new \Odan\Asset\PlatesAssetExtension($options));
+//    $engine->loadExtension(new PlatesDataExtension());
+//    $engine->addFolder('view', $path);
+//    return $engine;
+//};
+
+/**
+ * Twig render engine
+ *
+ * @param Container $container
+ * @return Twig
+ * @throws ContainerException
+ * @throws Twig_Error_Loader
+ */
+$container[Twig::class] = function (Container $container) {
+    $settings = $container->get('settings');
+    $viewPath = $settings['twig']['path'];
+
+    $twig = new \Slim\Views\Twig($viewPath, [
+        'cache' => $settings['twig']['cache_enabled'] ? $settings['twig']['cache_path']: false
+    ]);
+
+    /* @var Twig_Loader_Filesystem $loader */
+    $loader = $twig->getLoader();
+    $loader->addPath($settings['public'], 'public');
+
+    // Instantiate and add Slim specific extension
+    $basePath = rtrim(str_ireplace('index.php', '', $container->get('request')->getUri()->getBasePath()), '/');
+    $twig->addExtension(new Slim\Views\TwigExtension($container->get('router'), $basePath));
+
+    // Add the Assets extension to Twig
+    $twig->addExtension(new \Odan\Twig\TwigAssetsExtension($twig->getEnvironment(), $settings['twig']['assets']));
+
+    return $twig;
 };
 
 /**
@@ -96,6 +130,7 @@ $container[SessionHelper::class] = function () {
  *
  * @param Container $container
  * @return MailerInterface
+ * @throws ContainerException
  */
 $container[MailerInterface::class] = function (Container $container) {
     $mailgunSettings = $container->get('settings')->get('mailgun');

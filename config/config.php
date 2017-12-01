@@ -19,7 +19,19 @@ $config['db']['collation'] = 'utf8_unicode_ci';
 
 $config['canonical'] = 'https://www.tekk.ch';
 
-$config['viewPath'] = __DIR__ . '/../templates';
+$config['twig'] = [
+    // Public assets cache directory
+    'path' => __DIR__ . '/../templates',
+    'minify' => 1,
+    'assets' => [
+        'path' => __DIR__ . '/../public/cache',
+        // Cache settings
+        'cache_enabled' => true,
+        'cache_path' => __DIR__ . '/../tmp/cache',
+        'cache_name' => 'assets',
+        'cache_lifetime' => 0,
+    ]
+];
 
 $config['session'] = [
     'name' => 'slim_template',

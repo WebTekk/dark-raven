@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Adapter\MailerInterface;
+use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 
 /**
@@ -18,6 +19,7 @@ class MailingController extends AppController
     /**
      * EventController constructor.
      * @param Container $container Container
+     * @throws ContainerException
      */
     public function __construct(Container $container)
     {

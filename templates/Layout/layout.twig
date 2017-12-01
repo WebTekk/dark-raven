@@ -9,8 +9,8 @@
     <meta name="description" content="A Slim template">
     <meta name="keywords" content="Slim, template">
     <meta name=“robots” content=“nofollow”>
-    <base href="<?= $this->wh("root") ?>">
-    <link rel="canonical" href="<?= $this->wh("canonical") ?>"/>
+    <base href="{{ root }}">
+    <link rel="canonical" href="{{ canonical }}"/>
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -19,9 +19,9 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
 
-    <?= $this->section('assets') ?>
-    <?= $this->assets('view::Layout/layout.css', ['inline' => false]) ?>
-    <title><?= $this->wh("page") ?></title>
+    {{ assets({files: ['Layout/layout.css']}) }}
+    {% block assets %}{% endblock %}
+    <title>{{ title }}</title>
 
 </head>
 <body>
@@ -36,10 +36,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a href="<?= $this->wh("root") ?>" class="nav-link">Home</a>
+                <a href="{{ root }}" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-                <a href="<?= $this->wh("root") ?>events" class="nav-link">Events</a>
+                <a href="{{ root }}events" class="nav-link">Events</a>
             </li>
         </ul>
     </div>
@@ -48,7 +48,7 @@
 
 <div>
     <div class="content">
-        <?= $this->section('content') ?>
+        {% block content %}{% endblock %}
     </div>
 </div>
 
