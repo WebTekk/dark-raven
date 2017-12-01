@@ -25,6 +25,7 @@ $config['twig'] = [
     'cache' => __DIR__ . '/../temp/cache/twig',
     'cache_enabled' => true,
     'minify' => 1,
+    'debug' => true,
     'assets' => [
         'path' => __DIR__ . '/../public/cache',
         // Cache settings

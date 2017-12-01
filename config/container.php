@@ -75,7 +75,8 @@ $container[Twig::class] = function (Container $container) {
     $viewPath = $settings['twig']['path'];
 
     $twig = new \Slim\Views\Twig($viewPath, [
-        'cache' => $settings['twig']['cache_enabled'] ? $settings['twig']['cache'] : false
+        'cache' => $settings['twig']['cache_enabled'] ? $settings['twig']['cache'] : false,
+        'debug' => $settings['twig']['debug'],
     ]);
 
     /* @var Twig_Loader_Filesystem $loader */
