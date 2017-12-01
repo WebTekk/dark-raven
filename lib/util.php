@@ -1,5 +1,7 @@
 <?php
 
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Slim\App;
 use Symfony\Component\Translation\Translator;
 
@@ -49,8 +51,8 @@ function route(callable $route): string
  *
  * @param string $message
  * @return string
- * @throws \Psr\Container\ContainerExceptionInterface
- * @throws \Psr\Container\NotFoundExceptionInterface
+ * @throws ContainerExceptionInterface
+ * @throws NotFoundExceptionInterface
  */
 function __($message)
 {
