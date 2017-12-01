@@ -28,11 +28,6 @@ class AppController
     private $twig;
 
     /**
-     * @var Router
-     */
-    protected $router;
-
-    /**
      * @var Collection
      */
     protected $settings;
@@ -56,7 +51,6 @@ class AppController
     public function __construct(Container $container)
     {
         $this->twig = $container->get(Twig::class);
-        $this->router = $container->get('router');
         $this->settings = $container->get('settings');
         $this->request = $container->get('request');
         $this->response = $container->get('response');
@@ -73,7 +67,6 @@ class AppController
     public function render(string $file, array $viewData): Response
     {
         $default = [
-            'root' => $this->router->pathFor('root'),
             'canonical' => $this->settings->get('canonical'),
         ];
         $viewData = array_merge_recursive($viewData, $default);

@@ -19,13 +19,13 @@
     <tbody id="target"></tbody>
 </table>
 
-{#<script id="event-list" type="text/html">#}
-    {#{{#events}}#}
-    {#<tr data-id="{{id}}">#}
-        {#<td>{{name}}</td>#}
-        {#<td>{{date}}</td>#}
-        {#<td>{{location}}</td>#}
-    {#</tr>#}
-    {#{{/events}}#}
-{#</script>#}
+<script id="event-list" type="text/html">
+    {{#events}}
+    <tr data-id="{{id}}">
+        <td>{{name}}</td>
+        <td>{{date}}</td>
+        <td>{{location}}</td>
+    </tr>
+    {{/events}}
+</script>
 {% endblock %}
