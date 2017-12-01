@@ -6,26 +6,29 @@
 {% endblock %}
 
 {% block content %}
-<h1>{{ __('Events') }}</h1>
+    <h1>{{ __('Events') }}</h1>
 
-<table class="table">
-    <thead class="thead-dark">
-    <tr>
-        <th scope="col">{{ __('Name') }}</th>
-        <th scope="col">{{ __('Date') }}</th>
-        <th scope="col">{{ __('Location') }}</th>
-    </tr>
-    </thead>
-    <tbody id="target"></tbody>
-</table>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">{{ __('Name') }}</th>
+            <th scope="col">{{ __('Date') }}</th>
+            <th scope="col">{{ __('Location') }}</th>
+        </tr>
+        </thead>
+        <tbody id="target"></tbody>
+    </table>
 
-<script id="event-list" type="text/html">
-    {{#events}}
+    <script id="event-list" type="text/html">
+        {% verbatim %}
+{{#events}}
     <tr data-id="{{id}}">
         <td>{{name}}</td>
         <td>{{date}}</td>
         <td>{{location}}</td>
     </tr>
     {{/events}}
-</script>
+{% endverbatim %}
+    </script>
+
 {% endblock %}

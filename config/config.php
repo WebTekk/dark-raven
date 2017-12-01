@@ -23,7 +23,7 @@ $config['twig'] = [
     // Public assets cache directory
     'path' => __DIR__ . '/../templates',
     'cache' => __DIR__ . '/../temp/cache/twig',
-    'cache_enabled'=> true,
+    'cache_enabled' => true,
     'minify' => 1,
     'assets' => [
         'path' => __DIR__ . '/../public/cache',
