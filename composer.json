@@ -15,7 +15,8 @@
     "guzzlehttp/psr7": "^1.4",
     "slim/twig-view": "^2.3",
     "odan/twig-translation": "^0.2.2",
-    "odan/twig-assets": "^0.2.2"
+    "odan/twig-assets": "^0.2.2",
+    "symfony/translation": "^3.4"
   },
   "autoload": {
     "files": [

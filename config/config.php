@@ -22,12 +22,14 @@ $config['canonical'] = 'https://www.tekk.ch';
 $config['twig'] = [
     // Public assets cache directory
     'path' => __DIR__ . '/../templates',
+    'cache' => __DIR__ . '/../temp/cache/twig',
+    'cache_enabled'=> true,
     'minify' => 1,
     'assets' => [
         'path' => __DIR__ . '/../public/cache',
         // Cache settings
         'cache_enabled' => true,
-        'cache_path' => __DIR__ . '/../tmp/cache',
+        'cache_path' => __DIR__ . '/../temp/cache',
         'cache_name' => 'assets',
         'cache_lifetime' => 0,
     ]

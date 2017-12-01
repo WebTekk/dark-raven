@@ -1,6 +1,7 @@
 <?php
 
 use Slim\App;
+use Symfony\Component\Translation\Translator;
 
 /**
  * Get app.
@@ -41,4 +42,24 @@ function is_email(string $email): mixed
 function route(callable $route): string
 {
     return implode(':', (array)$route);
+}
+
+/**
+ * Text translation (I18n)
+ *
+ * @param string $message
+ * @return string
+ * @throws \Psr\Container\ContainerExceptionInterface
+ * @throws \Psr\Container\NotFoundExceptionInterface
+ */
+function __($message)
+{
+    /* @var $translator Translator */
+    $translator = app()->getContainer()->get(Translator::class);
+    $translated = $translator->trans($message);
+    $context = array_slice(func_get_args(), 1);
+    if (!empty($context)) {
+        $translated = vsprintf($translated, $context);
+    }
+    return $translated;
 }

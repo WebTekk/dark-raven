@@ -5,13 +5,13 @@ use App\Adapter\MailgunAdapter;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use Interop\Container\Exception\ContainerException;
-use League\Plates\Engine;
 use Mailgun\Mailgun;
-use Odan\Plates\Extension\PlatesDataExtension;
 use Slim\Container;
 use Slim\Views\Twig;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use SlimSession\Helper as SessionHelper;
+use Symfony\Component\Translation\Loader\MoFileLoader;
+use Symfony\Component\Translation\MessageSelector;
+use Symfony\Component\Translation\Translator;
 
 $app = app();
 $container = $app->getContainer();
@@ -63,30 +63,6 @@ $container[Connection::class] = function (Container $container) {
 };
 
 /**
- * Render engine container.
- *
- * @param Container $container
- * @return Engine
- * @throws ContainerException
- */
-//$container[Engine::class] = function (Container $container) {
-//    $path = $container->get('settings')->get('viewPath');
-//    $engine = new Engine($path, null);
-//    if (!is_dir(__DIR__ . '/../public/cache')) {
-//        mkdir(__DIR__ . '/../public/cache');
-//    }
-//    $options = array(
-//        'minify' => false,
-//        'public_dir' => __DIR__ . '/../public/cache',
-//        'cache' => new FilesystemAdapter('assets-cache', 0, __DIR__ . '/../temp/cache'),
-//    );
-//    $engine->loadExtension(new \Odan\Asset\PlatesAssetExtension($options));
-//    $engine->loadExtension(new PlatesDataExtension());
-//    $engine->addFolder('view', $path);
-//    return $engine;
-//};
-
-/**
  * Twig render engine
  *
  * @param Container $container
@@ -99,7 +75,7 @@ $container[Twig::class] = function (Container $container) {
     $viewPath = $settings['twig']['path'];
 
     $twig = new \Slim\Views\Twig($viewPath, [
-        'cache' => $settings['twig']['cache_enabled'] ? $settings['twig']['cache_path']: false
+        'cache' => $settings['twig']['cache_enabled'] ? $settings['twig']['cache'] : false
     ]);
 
     /* @var Twig_Loader_Filesystem $loader */
@@ -109,9 +85,8 @@ $container[Twig::class] = function (Container $container) {
     // Instantiate and add Slim specific extension
     $basePath = rtrim(str_ireplace('index.php', '', $container->get('request')->getUri()->getBasePath()), '/');
     $twig->addExtension(new Slim\Views\TwigExtension($container->get('router'), $basePath));
-
-    // Add the Assets extension to Twig
     $twig->addExtension(new \Odan\Twig\TwigAssetsExtension($twig->getEnvironment(), $settings['twig']['assets']));
+    $twig->addExtension(new \Odan\Twig\TwigTranslationExtension());
 
     return $twig;
 };
@@ -137,4 +112,27 @@ $container[MailerInterface::class] = function (Container $container) {
     $mailgun = Mailgun::create($mailgunSettings['api-key']);
     $mailgunAdapter = new MailgunAdapter($mailgunSettings['domain'], $mailgun, $mailgunSettings['from']);
     return $mailgunAdapter;
+};
+
+/**
+ * Translator container.
+ *
+ * @param Container $container
+ * @return Translator $translator
+ * @throws \Interop\Container\Exception\ContainerException
+ */
+$container[Translator::class] = function (Container $container): Translator {
+    $session = $container->get(SessionHelper::class);
+    $locale = $session->get('lang');
+    if (empty($locale)) {
+        $locale = 'DE';
+        $session->set('lang', 'DE');
+    }
+    $resource = __DIR__ . "/../resources/locale/" . $locale . "_messages.mo";
+    $translator = new Translator($locale, new MessageSelector());
+    $translator->setFallbackLocales(['EN']);
+    $translator->addLoader('mo', new MoFileLoader());
+    $translator->addResource('mo', $resource, $locale);
+    $translator->setLocale($locale);
+    return $translator;
 };
