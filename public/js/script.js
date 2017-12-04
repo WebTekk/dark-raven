@@ -4,7 +4,7 @@
  * @returns {*|jQuery}
  */
 function baseurl() {
-    return $('head base').attr('href');
+    return $("meta[name=xhr-baseurl]").attr("content");
 }
 
 /**
