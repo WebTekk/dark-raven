@@ -123,17 +123,6 @@ $container[MailerInterface::class] = function (Container $container) {
  * @throws ContainerException
  */
 $container[Translator::class] = function (Container $container): Translator {
-    $request = $container->get('request');
-    $locale = $request->getAttribute('language');
-    if ($locale == 'de') {
-        $locale = 'de_DE';
-    }
-
-    $resource = __DIR__ . "/../resources/locale/" . $locale . "_messages.mo";
-    $translator = new Translator($locale, new MessageSelector());
-    $translator->setFallbackLocales(['en_US']);
-    $translator->addLoader('mo', new MoFileLoader());
-    $translator->addResource('mo', $resource, $locale);
-    $translator->setLocale($locale);
+    $translator = new Translator('en_US', new MessageSelector());
     return $translator;
 };
