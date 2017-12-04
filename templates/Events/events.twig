@@ -19,16 +19,8 @@
         <tbody id="target"></tbody>
     </table>
 
-    <script id="event-list" type="text/html">
-        {% verbatim %}
-{{#events}}
-    <tr data-id="{{id}}">
-        <td>{{name}}</td>
-        <td>{{date}}</td>
-        <td>{{location}}</td>
-    </tr>
-    {{/events}}
-{% endverbatim %}
-    </script>
+    <template id="event-list" type="text/html">
+        {{ source('Events/events.mustache') }}
+    </template>
 
 {% endblock %}

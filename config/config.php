@@ -6,11 +6,18 @@ ini_set('display_errors', '0');
 // Timezone
 date_default_timezone_set('Europe/Berlin');
 
-$config = [];
+/**
+ * Slim settings
+ */
+$config = [
+    'displayErrorDetails' => false,
+    'determineRouteBeforeAppMiddleware' => true,
+    'addContentLengthHeader' => false,
+];
 
-$config['displayErrorDetails'] = true;
-$config['addContentLengthHeader'] = false;
-
+/**
+ * Application settings
+ */
 $config['db']['database'] = "slim";
 $config['db']['port'] = '3306';
 $config['db']['charset'] = 'utf8';

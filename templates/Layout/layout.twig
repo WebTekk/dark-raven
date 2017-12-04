@@ -8,8 +8,9 @@
     <meta name="author" content="Marc Wilhelm">
     <meta name="description" content="A Slim template">
     <meta name="keywords" content="Slim, template">
-    <meta name=“robots” content=“nofollow”>
-    <base href="{{ root }}">
+    <meta name="robots" content="nofollow">
+    <base href="{{ path_for('root') }}">
+    <meta name="xhr-baseurl" content="{{ path_for('root', { 'language': language }) }}">
     <link rel="canonical" href="{{ canonical }}"/>
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -36,10 +37,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a href="{{ path_for('root') }}" class="nav-link">{{ __('Home') }}</a>
+                <a href="{{ path_for('root', { 'language': language }) }}" class="nav-link">{{ __('Home') }}</a>
             </li>
             <li class="nav-item">
-                <a href="{{ path_for('events') }}" class="nav-link">{{ __('Events') }}</a>
+                <a href="{{ path_for('events', { 'language': language }) }}" class="nav-link">{{ __('Events') }}</a>
             </li>
         </ul>
     </div>

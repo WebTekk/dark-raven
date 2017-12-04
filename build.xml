@@ -308,4 +308,10 @@
             <param name="path" value=""/>
         </antcall>
     </target>
+
+    <target name="extract-i18n" description="Extract i18n">
+        <exec executable="php" failonerror="true">
+            <arg line="${basedir}/bin/parse-twig.php"/>
+        </exec>
+    </target>
 </project>

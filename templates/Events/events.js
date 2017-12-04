@@ -17,7 +17,8 @@ class Events {
     loadEvents() {
         let $this = this;
         showLoader();
-        let url = baseurl() + "events/load";
+        console.log(baseurl());
+        let url = baseurl() + "/events/load";
         $.ajax({
             type: "GET",
             contentType: "application/json",

@@ -33,14 +33,9 @@ class AppController
     protected $settings;
 
     /**
-     * @var Request
+     * @var Router
      */
-    protected $request;
-
-    /**
-     * @var Response
-     */
-    protected $response;
+    protected $router;
 
     /**
      * AppController constructor.
@@ -52,24 +47,26 @@ class AppController
     {
         $this->twig = $container->get(Twig::class);
         $this->settings = $container->get('settings');
-        $this->request = $container->get('request');
-        $this->response = $container->get('response');
         $this->session = $container->get(SessionHelper::class);
+        $this->router = $container->get('router');
     }
 
     /**
      * Render HTML file.
      *
+     * @param Request $request
+     * @param Response $response
      * @param string $file
      * @param array $viewData
      * @return Response
      */
-    public function render(string $file, array $viewData): Response
+    public function render(Request $request, Response $response, string $file, array $viewData): Response
     {
         $default = [
             'canonical' => $this->settings->get('canonical'),
+            'language' => $request->getAttribute('language'),
         ];
         $viewData = array_merge_recursive($viewData, $default);
-        return $this->twig->render($this->response, $file, $viewData);
+        return $this->twig->render($response, $file, $viewData);
     }
 }
