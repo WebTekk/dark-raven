@@ -7,6 +7,8 @@ use Cake\Database\Driver\Mysql;
 use Interop\Container\Exception\ContainerException;
 use Mailgun\Mailgun;
 use Slim\Container;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Views\Twig;
 use SlimSession\Helper as SessionHelper;
 use Symfony\Component\Translation\Loader\MoFileLoader;
@@ -124,5 +126,12 @@ $container[MailerInterface::class] = function (Container $container) {
  */
 $container[Translator::class] = function (Container $container): Translator {
     $translator = new Translator('en_US', new MessageSelector());
+    $translator->addLoader('mo', new MoFileLoader());
     return $translator;
+};
+
+$container['notFoundHandler'] = function (Container $container) {
+    return function (Request $request, Response $response) use ($container) {
+        return $response->withRedirect($container->get('router')->pathFor('notFound', ['language' => 'en']));
+    };
 };

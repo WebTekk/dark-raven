@@ -1,8 +1,8 @@
 <?php
 
+use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Symfony\Component\Translation\Loader\MoFileLoader;
 use Symfony\Component\Translation\Translator;
 
 $app = app();
@@ -20,20 +20,35 @@ $app->add(function (Request $request, Response $response, $next) use ($container
 
     $translator->setLocale($locale);
     $translator->setFallbackLocales(['en_US']);
-    $translator->addLoader('mo', new MoFileLoader());
     $translator->addResource('mo', $resource, $locale);
-    $translator->setLocale($locale);
 
     return $next($request, $response);
 });
 
 $app->add(function (Request $request, Response $response, $next) {
-    if (empty($request->getAttribute('language'))) {
+
+    $language = $request->getAttribute('language');
+    $hasLanguage = !empty($language);
+
+    if (empty($language)) {
+        // Browser language
         $language = $request->getHeader('accept-language')[0];
         $language = explode(',', $language)[0];
         $language = explode('-', $language)[0];
+    }
+
+    $whitelist = [
+        'de' => 'de_CH',
+        'en' => 'en_US',
+    ];
+    if (!isset($whitelist[$language])) {
+        throw new NotFoundException($request, $response);
+    }
+
+    if (!$hasLanguage) {
         return $response->withRedirect($this->router->pathFor('root', ['language' => $language]));
     }
+
     return $next($request, $response);
 });
 
@@ -45,7 +60,5 @@ $app->add(function (Request $request, Response $response, $next) {
     $language = $route->getArgument('language');
     $request = $request->withAttribute('language', $language);
 
-    $response = $next($request, $response);
-
-    return $response;
+    return $next($request, $response);
 });

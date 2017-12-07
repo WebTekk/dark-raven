@@ -8,3 +8,5 @@ $app->get('/{language}/events/load', route(['App\Controller\EventController', 'l
 $app->get('/{language}/mail', route(['App\Controller\MailingController', 'mail']))->setName("mailer");
 
 $app->get('/language/{language}', route(['App\Controller\LanguageController', 'language']))->setName("language");
+
+$app->get('/{language}/error404', route(['App\Controller\ErrorController', 'notFoundAction']))->setName("notFound");
