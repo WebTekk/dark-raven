@@ -1,23 +1,23 @@
-class Events {
+var Events = function () {
+
+    var $this = this;
 
     /**
      * Events constructor
      */
-    constructor() {
+    this.constructor = function() {
         this.screen = $("#target");
         this.loadEvents();
     };
 
-    listEvents(data) {
+    this.listEvents = function(data) {
         let template = $("#event-list").html();
         let rendered = Mustache.render(template, data);
         this.screen.html(rendered);
     };
 
-    loadEvents() {
-        let $this = this;
+    this.loadEvents = function() {
         showLoader();
-        console.log(baseurl());
         let url = baseurl() + "/events/load";
         $.ajax({
             type: "GET",
@@ -30,7 +30,9 @@ class Events {
             hideLoader();
         });
     };
-}
+
+    this.constructor();
+};
 
 /**
  * Start JavaScript when document is ready.
