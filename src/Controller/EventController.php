@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Mapper\EventMapper;
 use App\Repository\EventRepository;
 use Cake\Database\Connection;
 use Interop\Container\Exception\ContainerException;
@@ -55,7 +56,7 @@ class EventController extends AppController
      */
     public function load(Request $request, Response $response) : Response
     {
-        $eventRepo = new EventRepository($this->db);
+        $eventRepo = new EventMapper($this->db);
         $events = $eventRepo->getEvents();
         return $response->withJson(['events' => $events]);
     }
