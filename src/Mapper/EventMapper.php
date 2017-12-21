@@ -9,7 +9,7 @@
 namespace App\Mapper;
 
 
-use App\Entity\Event;
+use App\DataRow\Event;
 
 class EventMapper extends AbstractMapper
 {

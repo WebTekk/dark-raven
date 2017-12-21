@@ -1,11 +1,17 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: marc.wilhelm
+ * Date: 21.12.2017
+ * Time: 10:27
+ */
 
-namespace App\Entity;
+namespace App\DataRow;
 
 /**
  * Class Event
  */
-class Event extends Entity
+class Event extends AbstractRow
 {
     /**
      * @var int $id ID
