@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 use App\Mapper\EventMapper;
-use App\Repository\EventRepository;
 use Cake\Database\Connection;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
