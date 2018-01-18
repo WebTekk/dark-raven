@@ -1,67 +1,25 @@
 <?php
 
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use Slim\App;
 use Symfony\Component\Translation\Translator;
 
 /**
- * Get app.
+ * Translation function (i18n).
  *
- * @return App
- */
-function app(): App
-{
-    static $app = null;
-    if ($app === null) {
-        $app = new App(['settings' => require __DIR__ . '/../config/config.php']);
-    }
-    return $app;
-}
-
-/**
- * Handling email
- *
- * This function is shortening for filter_var.
- *
- * @see filter_var()
- *
- * @param string $email to check
- *
- * @return mixed
- */
-function is_email(string $email): mixed
-{
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
-}
-
-/**
- * Make routes callable
- *
- * @param callable $route Route
- * @return string Imploded route
- */
-function route(callable $route): string
-{
-    return implode(':', (array)$route);
-}
-
-/**
- * Text translation (I18n)
- *
- * @param string $message
+ * @param mixed $message
  * @return string
- * @throws ContainerExceptionInterface
- * @throws NotFoundExceptionInterface
  */
-function __($message)
-{
+function __($message) {
+    static $translator = null;
     /* @var $translator Translator */
-    $translator = app()->getContainer()->get(Translator::class);
+    if ($message instanceof Translator) {
+        $translator = $message;
+        return '';
+    }
     $translated = $translator->trans($message);
     $context = array_slice(func_get_args(), 1);
     if (!empty($context)) {
         $translated = vsprintf($translated, $context);
     }
+
     return $translated;
-}
+};

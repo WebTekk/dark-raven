@@ -2,15 +2,14 @@
 
 namespace App\Controller;
 
+use Aura\Session\Session;
 use Interop\Container\Exception\ContainerException;
-use League\Plates\Engine;
 use Slim\Collection;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
 use Slim\Views\Twig;
-use SlimSession\Helper as SessionHelper;
 
 /**
  * Class AppController
@@ -47,7 +46,7 @@ class AppController
     {
         $this->twig = $container->get(Twig::class);
         $this->settings = $container->get('settings');
-        $this->session = $container->get(SessionHelper::class);
+        $this->session = $container->get(Session::class);
         $this->router = $container->get('router');
     }
 

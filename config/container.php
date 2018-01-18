@@ -2,31 +2,70 @@
 
 use App\Adapter\MailerInterface;
 use App\Adapter\MailgunAdapter;
+use Aura\Session\Session;
+use Aura\Session\SessionFactory;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
-use Interop\Container\Exception\ContainerException;
-use Mailgun\Mailgun;
+use Monolog\Logger;
+use Odan\Twig\TwigAssetsExtension;
+use Odan\Twig\TwigTranslationExtension;
 use Slim\Container;
+use Slim\Http\Environment;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Views\Twig;
-use SlimSession\Helper as SessionHelper;
 use Symfony\Component\Translation\Loader\MoFileLoader;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Translator;
 
-$app = app();
 $container = $app->getContainer();
 
 /**
  * Environment container (for routes).
  *
- * @return \Slim\Http\Environment
+ * @return Environment
  */
-$container['environment'] = function () {
+$container['environment'] = function (): Environment {
     $scriptName = $_SERVER['SCRIPT_NAME'];
     $_SERVER['SCRIPT_NAME'] = dirname(dirname($scriptName)) . '/' . basename($scriptName);
+
     return new Slim\Http\Environment($_SERVER);
+};
+
+/**
+ * Twig container.
+ *
+ * @param Container $container
+ * @return Twig
+ * @throws \Interop\Container\Exception\ContainerException
+ */
+$container[Twig::class] = function (Container $container) : Twig {
+    $twigSettings = $container->get('settings')->get('twig');
+
+    $basePath = rtrim(str_ireplace('index.php', '', $container->get('request')->getUri()->getBasePath()), '/');
+
+    $twig = new Twig($twigSettings['viewPath'],
+        ['cache' => $twigSettings['cachePath'], 'auto_reload' => $twigSettings['autoReload']]);
+    $twig->addExtension(new TwigTranslationExtension());
+    $twig->addExtension(new \Slim\Views\TwigExtension($container->get('router'), $basePath));
+    $twig->addExtension(new TwigAssetsExtension($twig->getEnvironment(), $twigSettings['assetCache']));
+
+    return $twig;
+};
+
+/**
+ * Translator container.
+ *
+ * @param Container $container
+ * @return Translator $translator
+ * @throws \Interop\Container\Exception\ContainerException
+ */
+$container[Translator::class] = function (Container $container): Translator {
+    $settings = $container->get('settings')->get(Translator::class);
+    $translator = new Translator($settings['locale'], new MessageSelector());
+    $translator->addLoader('mo', new MoFileLoader());
+
+    return $translator;
 };
 
 /**
@@ -34,9 +73,9 @@ $container['environment'] = function () {
  *
  * @param Container $container
  * @return Connection
- * @throws ContainerException
+ * @throws \Interop\Container\Exception\ContainerException
  */
-$container[Connection::class] = function (Container $container) {
+$container[Connection::class] = function (Container $container): Connection {
     $config = $container->get('settings')->get('db');
     $driver = new Mysql([
         'host' => $config['host'],
@@ -54,82 +93,76 @@ $container[Connection::class] = function (Container $container) {
             // Set default fetch mode
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_PERSISTENT => false,
-            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8 COLLATE utf8_unicode_ci"
-        ]
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8 COLLATE utf8_unicode_ci",
+        ],
     ]);
     $db = new Connection([
-        'driver' => $driver
+        'driver' => $driver,
     ]);
     $db->connect();
+
     return $db;
 };
 
 /**
- * Twig render engine
+ * Session container.
  *
  * @param Container $container
- * @return Twig
- * @throws ContainerException
- * @throws Twig_Error_Loader
+ * @return Session
+ * @throws \Interop\Container\Exception\ContainerException
  */
-$container[Twig::class] = function (Container $container) {
-    $settings = $container->get('settings');
-    $viewPath = $settings['twig']['path'];
+$container[Session::class] = function (Container $container): Session {
+    $factory = new SessionFactory();
+    $cookies = $container->get('request')->getCookieParams();
+    $session = $factory->newInstance($cookies);
+    $settings = $container->get('settings')->get(Session::class);
+    $session->setName($settings['name']);
+    $session->setCacheExpire($settings['cache_expire']);
 
-    $twig = new \Slim\Views\Twig($viewPath, [
-        'cache' => $settings['twig']['cache_enabled'] ? $settings['twig']['cache'] : false,
-        'debug' => $settings['twig']['debug'],
-    ]);
-
-    /* @var Twig_Loader_Filesystem $loader */
-    $loader = $twig->getLoader();
-    $loader->addPath($settings['public'], 'public');
-
-    // Instantiate and add Slim specific extension
-    $basePath = rtrim(str_ireplace('index.php', '', $container->get('request')->getUri()->getBasePath()), '/');
-    $twig->addExtension(new Slim\Views\TwigExtension($container->get('router'), $basePath));
-    $twig->addExtension(new \Odan\Twig\TwigAssetsExtension($twig->getEnvironment(), $settings['twig']['assets']));
-    $twig->addExtension(new \Odan\Twig\TwigTranslationExtension());
-
-    return $twig;
+    return $session;
 };
 
 /**
- * Session container
- *
- * @return SessionHelper
- */
-$container[SessionHelper::class] = function () {
-    return new SessionHelper();
-};
-
-/**
- * Mailer container
+ * Mailer container.
  *
  * @param Container $container
- * @return MailerInterface
- * @throws ContainerException
+ * @return MailgunAdapter
+ * @throws \Interop\Container\Exception\ContainerException
+ * @throws Exception
  */
 $container[MailerInterface::class] = function (Container $container) {
-    $mailgunSettings = $container->get('settings')->get('mailgun');
-    $mailgun = Mailgun::create($mailgunSettings['api-key']);
-    $mailgunAdapter = new MailgunAdapter($mailgunSettings['domain'], $mailgun, $mailgunSettings['from']);
-    return $mailgunAdapter;
+    try {
+        $mailSettings = $container->get('settings')->get('mailgun');
+        $mail = new MailgunAdapter($mailSettings['apikey'], $mailSettings['domain'], $mailSettings['from']);
+    } catch (Exception $exception) {
+        $logger = $container->get(Logger::class);
+        $message = $exception->getMessage();
+        $message .= "\n" . $exception->getTraceAsString();
+        $context = $container->get('settings')->get('logger')['context'][MailerInterface::class];
+        $logger->addDebug($message, $context);
+        throw new Exception('Mailer instantiation failed');
+    }
+
+    return $mail;
 };
 
 /**
- * Translator container.
+ * Logger container.
  *
  * @param Container $container
- * @return Translator $translator
- * @throws ContainerException
+ * @return Logger
+ * @throws \Interop\Container\Exception\ContainerException
  */
-$container[Translator::class] = function (Container $container): Translator {
-    $translator = new Translator('en_US', new MessageSelector());
-    $translator->addLoader('mo', new MoFileLoader());
-    return $translator;
+$container[Monolog\Logger::class] = function (Container $container) {
+    return new Logger($container->get('settings')->get('logger')['main']);
 };
 
+/**
+ * Not found handler.
+ *
+ * @param Container $container
+ * @return Closure
+ */
 $container['notFoundHandler'] = function (Container $container) {
     return function (Request $request, Response $response) use ($container) {
         return $response->withRedirect($container->get('router')->pathFor('notFound', ['language' => 'en']));

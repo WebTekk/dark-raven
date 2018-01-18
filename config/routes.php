@@ -1,14 +1,13 @@
 <?php
-$app = app();
+$language = '{language:(?:de|en)}';
 
-$app->get('/[{language}]', route(['App\Controller\HomeController', 'index']))->setName('root');
+$app->get('/[' . $language . ']', 'App\Controller\HomeController:index')->setName('root');
 
-$app->get('/{language}/events', route(['App\Controller\EventController', 'index']))->setName("events");
-$app->get('/{language}/events/load', route(['App\Controller\EventController', 'load']))->setName("loadEvents");
-$app->get('/{language}/mail', route(['App\Controller\MailingController', 'mail']))->setName("mailer");
+$app->get('/' . $language . '/events', 'App\Controller\EventController:index')->setName("events");
+$app->get('/' . $language . '/events/load', 'App\Controller\EventController:load')->setName("loadEvents");
 
-$app->get('/language/{language}', route(['App\Controller\LanguageController', 'language']))->setName("language");
+$app->get('/language/' . $language . '', 'App\Controller\LanguageController:language')->setName("language");
 
-$app->get('/{language}/xml', route(['App\Controller\ZInvoiceController', 'index']))->setName("xml");
+$app->get('/' . $language . '/xml', 'App\Controller\ZInvoiceController:index')->setName("xml");
 
-$app->get('/{language}/error404', route(['App\Controller\ErrorController', 'notFoundAction']))->setName("notFound");
+$app->get('/' . $language . '/error404', 'App\Controller\ErrorController:notFoundAction')->setName("notFound");
