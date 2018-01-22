@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Test;
-
 use Cake\Database\Connection;
 use Exception;
 use PDO;
@@ -10,34 +8,31 @@ use Phinx\Wrapper\TextWrapper;
 use PHPUnit\DbUnit\Database\DefaultConnection;
 use PHPUnit\DbUnit\Operation\Factory;
 use PHPUnit\DbUnit\TestCaseTrait;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Slim\Container;
-
 /**
  * Class DbTestCase
  */
 abstract class DbTestCase extends ApiTestCase
 {
     use TestCaseTrait;
-
     /**
      * @var PDO
      */
     private static $pdo = null;
-
     // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
     private $conn = null;
-
     /**
      * @var Container
      */
     private $container;
-
     /**
      * Get PDO object.
      *
      * @return PDO
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     protected function getPdo(): PDO
     {
@@ -45,36 +40,30 @@ abstract class DbTestCase extends ApiTestCase
             $pdo = $this->app->getContainer()->get(Connection::class)->getDriver()->connection();
             self::$pdo = $pdo;
         }
-
         return self::$pdo;
     }
-
     /**
      * Setup.
      *
      * This code will be executed once before the tests are executed.
      *
      * @throws Exception
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function setUp()
     {
         parent::setUp();
         $this->container = $this->app->getContainer();
-
         // Check if phinxlog table exists in database.
         $tableSchema = $this->container->get('settings')->get('db')['database'];
         $pdo = $this->getPdo();
         $stmt = $pdo->prepare("SELECT 1 FROM information_schema.TABLES WHERE TABLE_SCHEMA = :tableschema AND TABLE_NAME = :phinxlog");
-        $stmt->execute([':tableschema' => $tableSchema, ':phinxlog' => 'phinxlog']);
-
+        $stmt->execute(['tableschema' => $tableSchema, 'phinxlog' => 'phinxlog']);
         $shouldMigrate = true;
-
         if ($stmt->fetch()) {
             $shouldMigrate = $this->hasPendingMigrations($pdo);
         }
-
         if ($shouldMigrate) {
             chdir(__DIR__ . '/../config');
             $wrap = new TextWrapper(new PhinxApplication());
@@ -86,11 +75,9 @@ abstract class DbTestCase extends ApiTestCase
                 throw new Exception('Error: Setup database failed with exit code: %s', $wrap->getExitCode());
             }
         }
-
         $this->truncateTables();
         Factory::INSERT()->execute($this->getConnection(), $this->getDataSet());
     }
-
     /**
      * Check if there is any pending migration.
      *
@@ -100,38 +87,37 @@ abstract class DbTestCase extends ApiTestCase
      */
     private function hasPendingMigrations(PDO $pdo): bool
     {
-        $shouldMigrate = true;
         // Check if there is any pending migration
         $stmt = $pdo->prepare("SELECT version FROM phinxlog ORDER BY version ASC");
         $stmt->execute();
-        $executedMigrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if ($executedMigrations !== false) {
-            foreach ($executedMigrations as $key => $record) {
-                $executedMigrations[$key] = $record['version'];
-            }
-
-            $migrationsPath = $this->container->get('settings')->get('migrations');
-            $migrationFiles = glob($migrationsPath . '/*.php');
-            foreach ($migrationFiles as $key => $file) {
-                $filename = basename($file, '.php');
-                if ($filename === 'schema') {
-                    unset($migrationFiles[$key]);
-                    continue;
-                }
-                $migrationFiles[$key] = preg_replace('/[^\d\W]+/', '', $filename);;
-            }
-            $missingMigrations = array_diff($migrationFiles, $executedMigrations);
-            $shouldMigrate = !empty($missingMigrations);
+        $phinxlogRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (empty($phinxlogRows)) {
+            return false;
         }
-
-        return $shouldMigrate;
+        $migratedVersions = [];
+        foreach ($phinxlogRows as $record) {
+            $migratedVersions[$record['version']] = 1;
+        }
+        $migrationsPath = $this->container->get('settings')->get('migrations');
+        $migrationFiles = glob($migrationsPath . '/*.php');
+        foreach ($migrationFiles as $key => $file) {
+            $filename = pathinfo($file, PATHINFO_FILENAME);
+            if ($filename === 'schema') {
+                continue;
+            }
+            // remove everything after _ to get version from filename
+            $version = substr($filename, 0, strpos($filename, '_'));
+            if (!isset($migratedVersions[$version])){
+                return true;
+            };
+        }
+        return false;
     }
-
     /**
      * Truncate all Tables.
      *
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     protected function truncateTables()
     {
@@ -144,23 +130,20 @@ abstract class DbTestCase extends ApiTestCase
             }
         }
     }
-
     /**
      * Get Connection.
      *
      * @return DefaultConnection
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function getConnection(): DefaultConnection
     {
         if ($this->conn === null) {
             $this->conn = $this->createDefaultDBConnection($this->getPdo());
         }
-
         return $this->conn;
     }
-
     /**
      * Generate Update row.
      *
@@ -178,8 +161,6 @@ abstract class DbTestCase extends ApiTestCase
             sort($parts);
             $row[$key] = implode($parts);
         }
-
         return $row;
     }
 }
-
