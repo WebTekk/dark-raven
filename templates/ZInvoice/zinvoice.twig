@@ -1,30 +1,30 @@
 {% extends "Layout/layout.twig" %}
 
 {% block content %}
-    <h1>{{ __('Xml') }}</h1>
-    <p>Invoice number: {{ data.invoice_number }}</p>
-    <p>Total tax rate: {{ data.total_tax_rate_per_category_and_region }}</p>
-    <p>Total tax amount: {{ data.total_tax_amount }}</p>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Invoice id</th>
-            <th>Item id</th>
-            <th>Service name</th>
-            <th>Service units</th>
-            <th>Service extended price</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in data.invoice_item %}
+    <h1>{{ __('XML') }}</h1>
+    {% for invoice in data %}
+        <p>Invoice number: {{ invoice.invoice_number }}</p>
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <td>{{ item.invoice_id }}</td>
-                <td>{{ item.invoice_item_id }}</td>
-                <td>{{ item.service_name }}</td>
-                <td>{{ item.service_units }}</td>
-                <td>{{ item.service_extended_price }}</td>
+                <th>Invoice id</th>
+                <th>Item id</th>
+                <th>Service name</th>
+                <th>Service units</th>
+                <th>Service extended price</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for item in invoice.items %}
+                <tr>
+                    <td>{{ item.invoice_id }}</td>
+                    <td>{{ item.invoice_item_id }}</td>
+                    <td>{{ item.service_name }}</td>
+                    <td>{{ item.service_units }}</td>
+                    <td>{{ item.service_extended_price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
 {% endblock %}

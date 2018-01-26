@@ -21,19 +21,26 @@ class ZInvoiceMapper extends AbstractMapper
         $xpath = new DOMXPath($doc);
         $xpath->registerNameSpace('ns', 'http://tempuri.org/invoice_batch_generic.xsd');
 
-        $elements['invoice_number'] = $xpath->query("//ns:invoice_number")->item(0)->nodeValue;
-        $elements['total_tax_rate_per_category_and_region'] = $xpath->query("//ns:total_tax_rate_per_category_and_region")->item(0)->nodeValue;
-        $elements['total_tax_amount'] = $xpath->query("//ns:total_tax_amount")->item(0)->nodeValue;
-        $invoiceitems = $xpath->query("//ns:invoice_item");
+        $root = $xpath->query('/ns:invoice_batch_generic/ns:account/ns:invoice');
 
-        foreach ($invoiceitems as $item) {
-            $elements['invoice_item'][] = [
-                'invoice_id' => $xpath->query("./ns:invoice_id ", $item)->item(0)->nodeValue,
-                'invoice_item_id' => $xpath->query("./ns:invoice_item_id", $item)->item(0)->nodeValue,
-                'service_name' => $xpath->query("./ns:service_name", $item)->item(0)->nodeValue,
-                'service_units' => $xpath->query("./ns:service_units", $item)->item(0)->nodeValue,
-                'service_extended_price' => $xpath->query("./ns:service_extended_price", $item)->item(0)->nodeValue,
-            ];
+        $elements = [];
+        foreach ($root as $invoice) {
+            $invoiceNumber = $xpath->query('ns:invoice_number', $invoice)->item(0)->nodeValue;
+            $elements[$invoiceNumber]['invoice_number'] = $invoiceNumber;
+            $elements[$invoiceNumber]['invoice_total'] = $xpath->query('ns:invoice_total',
+                $invoice)->item(0)->nodeValue;
+            $elements[$invoiceNumber]['total_tax_value'] = $xpath->query('ns:total_tax_value',
+                $invoice)->item(0)->nodeValue;
+            $invoiceItems = $xpath->query('ns:invoice_item', $invoice);
+            foreach ($invoiceItems as $item) {
+                $elements[$invoiceNumber]['items'][] = [
+                    'invoice_id' => $xpath->query("ns:invoice_id ", $item)->item(0)->nodeValue,
+                    'invoice_item_id' => $xpath->query("ns:invoice_item_id", $item)->item(0)->nodeValue,
+                    'service_name' => $xpath->query("ns:service_name", $item)->item(0)->nodeValue,
+                    'service_units' => $xpath->query("ns:service_units", $item)->item(0)->nodeValue,
+                    'service_extended_price' => $xpath->query("ns:service_extended_price", $item)->item(0)->nodeValue,
+                ];
+            }
         }
         return $elements;
     }
