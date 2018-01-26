@@ -1,6 +1,6 @@
 vendor/*
 config/env.php
-temp/*
+tmp/cache/*
 public/assets/*
 .idea
 composer.lock
