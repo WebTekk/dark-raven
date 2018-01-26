@@ -2,7 +2,9 @@
 
 {% block content %}
     <h1>{{ __('XML') }}</h1>
-    {% for invoice in data %}
+    <p>Total tax rate: {{ data.total_tax_rate_per_category_and_region }}</p>
+    <p>Total tax amount: {{ data.total_tax_amount }}</p>
+    {% for invoice in data.elements %}
         <p>Invoice number: {{ invoice.invoice_number }}</p>
         <table class="table table-hover">
             <thead>

@@ -33,15 +33,21 @@ class ZInvoiceMapper extends AbstractMapper
                 $invoice)->item(0)->nodeValue;
             $invoiceItems = $xpath->query('ns:invoice_item', $invoice);
             foreach ($invoiceItems as $item) {
+                $price = $xpath->query("ns:service_extended_price", $item)->item(0)->nodeValue;
                 $elements[$invoiceNumber]['items'][] = [
                     'invoice_id' => $xpath->query("ns:invoice_id ", $item)->item(0)->nodeValue,
                     'invoice_item_id' => $xpath->query("ns:invoice_item_id", $item)->item(0)->nodeValue,
                     'service_name' => $xpath->query("ns:service_name", $item)->item(0)->nodeValue,
                     'service_units' => $xpath->query("ns:service_units", $item)->item(0)->nodeValue,
-                    'service_extended_price' => $xpath->query("ns:service_extended_price", $item)->item(0)->nodeValue,
+                    'service_extended_price' => str_split($price, strlen($price) - 2)[0],
                 ];
             }
         }
-        return $elements;
+        $result = [
+            'total_tax_rate_per_category_and_region' => $xpath->query('/ns:invoice_batch_generic/ns:taxregioncategory/ns:total_tax_rate_per_category_and_region')->item(0)->nodeValue,
+            'total_tax_amount' => $xpath->query('/ns:invoice_batch_generic/ns:taxregioncategory/ns:total_tax_amount')->item(0)->nodeValue,
+            'elements' => $elements,
+        ];
+        return $result;
     }
 }
