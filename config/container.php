@@ -1,7 +1,5 @@
 <?php
 
-use App\Adapter\MailerInterface;
-use App\Adapter\MailgunAdapter;
 use Aura\Session\Session;
 use Aura\Session\SessionFactory;
 use Cake\Database\Connection;
@@ -120,30 +118,6 @@ $container[Session::class] = function (Container $container): Session {
     $session->setCacheExpire($settings['cache_expire']);
 
     return $session;
-};
-
-/**
- * Mailer container.
- *
- * @param Container $container
- * @return MailgunAdapter
- * @throws \Interop\Container\Exception\ContainerException
- * @throws Exception
- */
-$container[MailerInterface::class] = function (Container $container) {
-    try {
-        $mailSettings = $container->get('settings')->get('mailgun');
-        $mail = new MailgunAdapter($mailSettings['apikey'], $mailSettings['domain'], $mailSettings['from']);
-    } catch (Exception $exception) {
-        $logger = $container->get(Logger::class);
-        $message = $exception->getMessage();
-        $message .= "\n" . $exception->getTraceAsString();
-        $context = $container->get('settings')->get('logger')['context'][MailerInterface::class];
-        $logger->addDebug($message, $context);
-        throw new Exception('Mailer instantiation failed');
-    }
-
-    return $mail;
 };
 
 /**

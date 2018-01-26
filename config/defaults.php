@@ -67,15 +67,6 @@ $config['session'] = [
 
 $config['logger'] = [
     'main' => 'app',
-    'context' => [
-        MailerInterface::class => 'mail',
-    ],
-];
-
-$config['mailgun'] = [
-    'from' => '',
-    'apikey' => '',
-    'domain' => '',
 ];
 
 return $config;
