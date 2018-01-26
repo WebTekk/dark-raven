@@ -21,10 +21,10 @@ class ZInvoiceMapper extends AbstractMapper
         $xpath = new DOMXPath($doc);
         $xpath->registerNameSpace('ns', 'http://tempuri.org/invoice_batch_generic.xsd');
 
-        $root = $xpath->query('/ns:invoice_batch_generic/ns:account/ns:invoice');
+        $invoiceRoot = $xpath->query('/ns:invoice_batch_generic/ns:account/ns:invoice');
 
         $elements = [];
-        foreach ($root as $invoice) {
+        foreach ($invoiceRoot as $invoice) {
             $invoiceNumber = $xpath->query('ns:invoice_number', $invoice)->item(0)->nodeValue;
             $elements[$invoiceNumber]['invoice_number'] = $invoiceNumber;
             $elements[$invoiceNumber]['invoice_total'] = $xpath->query('ns:invoice_total',
