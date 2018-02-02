@@ -1,11 +1,32 @@
 <?php
 
+use Aura\Session\Session;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Symfony\Component\Translation\Translator;
 
 $container = $app->getContainer();
+
+$app->add(function (Request $request, Response $response, $next) use ($container) {
+    $route = $request->getAttribute('route');
+    $session = $container->get(Session::class);
+    $locale = $request->getAttribute('language');
+    $routeName = $route->getName();
+    $publicRoutes = [
+        'root',
+        'getLogin',
+        'postLogin',
+        'language',
+        'notFound',
+   ];
+    $segment = $session->getSegment('session');
+    $role = $segment->get('role');
+    if ($role !== 'Admin' && !in_array($routeName, $publicRoutes)) {
+        return $response->withRedirect($this->router->pathFor('notFound', ['language' => $locale]));
+    }
+    return $next($request, $response);
+});
 
 $app->add(function (Request $request, Response $response, $next) use ($container) {
     $locale = $request->getAttribute('language');

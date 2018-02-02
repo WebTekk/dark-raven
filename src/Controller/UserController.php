@@ -45,6 +45,13 @@ class UserController extends AppController
         return $this->render($request, $response, 'User/userList.twig', $viewData);
     }
 
+    /**
+     * Load all users
+     *
+     * @param Request $request Request
+     * @param Response $response Response
+     * @return Response
+     */
     public function loadAllUsers(Request $request, Response $response): Response
     {
         $userService = new UserService($this->db);
