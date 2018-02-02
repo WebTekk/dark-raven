@@ -17,7 +17,7 @@ use Slim\Views\Twig;
 class AppController
 {
     /**
-     * @var SessionHelper
+     * @var Session
      */
     protected $session;
 
@@ -64,6 +64,7 @@ class AppController
         $default = [
             'canonical' => $this->settings->get('canonical'),
             'language' => $request->getAttribute('language'),
+            'loggedIn' => !empty($this->session->getSegment('session')->get('username')),
         ];
         $viewData = array_merge_recursive($viewData, $default);
         return $this->twig->render($response, $file, $viewData);

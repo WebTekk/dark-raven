@@ -5,7 +5,6 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Symfony\Component\Translation\Translator;
 
-$app = app();
 $container = $app->getContainer();
 
 $app->add(function (Request $request, Response $response, $next) use ($container) {

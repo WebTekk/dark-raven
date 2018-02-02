@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Mapper;
+namespace App\Model;
 
 
 use Cake\Database\Connection;
 use Cake\Database\Query;
 
-abstract class AbstractMapper implements MapperInterface
+abstract class AbstractModel implements ModelInterface
 {
     /**
      * @var Connection

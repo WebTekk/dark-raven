@@ -49,6 +49,7 @@ $config['twig'] = [
         'path' => __DIR__ . '/../public/assets',
         // Cache settings
         'cache_enabled' => true,
+        'minify' => true,
         'cache_path' => __DIR__ . '/../tmp/cache',
         'cache_name' => 'assets',
         'cache_lifetime' => 0,
