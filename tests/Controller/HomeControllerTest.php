@@ -32,7 +32,6 @@ class HomeControllerTest extends ApiTestCase
     {
         $request = $this->createRequest('GET', '/');
         $response = $this->request($request);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains('div', (string)$response->getBody());
+        $this->assertEquals(302, $response->getStatusCode());
     }
 }
