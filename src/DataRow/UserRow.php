@@ -45,11 +45,6 @@ class UserRow extends AbstractRow
     public $lastName;
 
     /**
-     * @var int Created by
-     */
-    public $createdBy;
-
-    /**
      * @var DateTime Created at
      */
     public $createdAt;

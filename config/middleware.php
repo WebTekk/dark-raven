@@ -19,6 +19,8 @@ $app->add(function (Request $request, Response $response, $next) use ($container
         'postLogin',
         'language',
         'notFound',
+        'getRegister',
+        'postRegister',
    ];
     $segment = $session->getSegment('session');
     $role = $segment->get('role');
