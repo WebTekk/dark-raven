@@ -36,7 +36,15 @@ class LoginModel extends AbstractModel
     public function getUser(string $username): UserRow
     {
         $query = $this->newSelect();
-        $query->select(['id', 'username', 'password', 'role'])->where(['username' => $username]);
+        $selectors = [
+            'users.id',
+            'users.username',
+            'users.password',
+            'roles.role',
+        ];
+        $query->select($selectors)
+            ->leftJoin('roles', ['users.role_id = roles.id'])
+            ->where(['username' => $username]);
         $row = $query->execute()->fetch('assoc');
         if (empty($row)) {
             throw new RuntimeException(__('User %s not found', $username));
