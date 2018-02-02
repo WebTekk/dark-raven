@@ -6,7 +6,7 @@ namespace App\Model;
 use App\DataRow\UserRow;
 use RuntimeException;
 
-class LoginModel extends AbstractModel
+class UserModel extends AbstractModel
 {
     /**
      * @var string Table

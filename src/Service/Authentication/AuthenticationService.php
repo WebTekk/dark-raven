@@ -10,7 +10,7 @@ namespace App\Service\Authentication;
 
 
 use App\DataRow\Validation;
-use App\Model\LoginModel;
+use App\Model\UserModel;
 use Aura\Session\Session;
 use Cake\Database\Connection;
 
@@ -46,7 +46,7 @@ class AuthenticationService
      */
     public function loginUser(string $username):void
     {
-        $loginModel = new LoginModel($this->db);
+        $loginModel = new UserModel($this->db);
         $user = $loginModel->getUser($username);
         $segment = $this->session->getSegment('session');
         $segment->set('userId', $user->id);
@@ -82,7 +82,7 @@ class AuthenticationService
      */
     protected function validateAccount(string $username, string $password, Validation $validation)
     {
-        $loginModel = new LoginModel($this->db);
+        $loginModel = new UserModel($this->db);
         if (!$loginModel->findUser($username)) {
             $validation->addError('username', __('The user %s does not exist.', $username));
             return $validation;
