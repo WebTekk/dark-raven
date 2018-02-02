@@ -52,4 +52,31 @@ class UserModel extends AbstractModel
         $user = new UserRow($row);
         return $user;
     }
+
+    /**
+     * Load all users
+     *
+     * @return UserRow[]
+     */
+    public function loadAllUsers(): array
+    {
+        $query = $this->newSelect();
+        $selectors = [
+            'users.id',
+            'users.username',
+            'users.email',
+            'users.first_name',
+            'users.last_name',
+            'roles.role',
+        ];
+        $query->select($selectors)
+            ->leftJoin('roles', ['users.role_id = roles.id'])
+            ->where(['active' => 1]);
+        $rows = $query->execute()->fetchAll('assoc');
+        $users = [];
+        foreach ($rows as $row) {
+            $users[] = new UserRow($row);
+        }
+        return $users;
+    }
 }

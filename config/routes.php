@@ -7,6 +7,9 @@ $app->get('/' . $language . '/login', 'App\Controller\AuthenticationController:i
 $app->post('/' . $language . '/login', 'App\Controller\AuthenticationController:login')->setName('postLogin');
 $app->get('/' . $language . '/logout', 'App\Controller\AuthenticationController:logout')->setName('logout');
 
+$app->get('/' . $language . '/users', 'App\Controller\UserController:index')->setName('userList');
+$app->get('/' . $language . '/users/load', 'App\Controller\UserController:loadAllUsers')->setName('loadUsers');
+
 $app->get('/language/' . $language . '', 'App\Controller\LanguageController:language')->setName("language");
 
 $app->get('/' . $language . '/error404', 'App\Controller\ErrorController:notFoundAction')->setName("notFound");

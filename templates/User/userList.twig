@@ -1,0 +1,29 @@
+{% extends "Layout/layout.twig" %}
+
+{% block assets %}
+    {{ assets({files: ['User/users.js'], name: 'users.js'}) }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>{{ __('Users') }}</h1>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">{{ __('ID') }}</th>
+            <th scope="col">{{ __('Username') }}</th>
+            <th scope="col">{{ __('First name') }}</th>
+            <th scope="col">{{ __('Last name') }}</th>
+            <th scope="col">{{ __('E-Mail') }}</th>
+            <th scope="col">{{ __('Role') }}</th>
+        </tr>
+        </thead>
+        <tbody id="target"></tbody>
+    </table>
+
+    <script type="text/html" id="user-list">
+        {{ source('User/users.mustache') }}
+    </script>
+
+{% endblock %}

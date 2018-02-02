@@ -61,11 +61,20 @@ class AppController
      */
     public function render(Request $request, Response $response, string $file, array $viewData): Response
     {
+        $segment = $this->session->getSegment('session');
+        $loggedIn = !empty($segment->get('username'));
         $default = [
             'canonical' => $this->settings->get('canonical'),
             'language' => $request->getAttribute('language'),
-            'loggedIn' => !empty($this->session->getSegment('session')->get('username')),
+            'loggedIn' => $loggedIn,
         ];
+        if ($loggedIn) {
+            $default['user'] = [
+                'userId' => $segment->get('userId'),
+                'username' => $segment->get('username'),
+                'role' => $segment->get('role'),
+            ];
+        }
         $viewData = array_merge_recursive($viewData, $default);
         return $this->twig->render($response, $file, $viewData);
     }

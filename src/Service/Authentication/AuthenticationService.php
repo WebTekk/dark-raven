@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: marc.wilhelm
- * Date: 02.02.2018
- * Time: 09:10
- */
 
 namespace App\Service\Authentication;
 
