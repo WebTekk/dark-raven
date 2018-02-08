@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Model;
+namespace App\Table;
 
 
 use Cake\Database\Connection;
 use Cake\Database\Query;
 
-abstract class AbstractModel implements ModelInterface
+abstract class AbstractTable implements TableInterface
 {
     /**
      * @var Connection

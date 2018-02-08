@@ -24,7 +24,8 @@ $app->add(function (Request $request, Response $response, $next) use ($container
    ];
     $segment = $session->getSegment('session');
     $role = $segment->get('role');
-    if ($role !== 'Admin' && !in_array($routeName, $publicRoutes)) {
+    // TOdO: implement as constant Role::ROLE_ADMIN
+    if ($role !== 'ROLE_ADMIN' && !in_array($routeName, $publicRoutes)) {
         return $response->withRedirect($this->router->pathFor('notFound', ['language' => $locale]));
     }
     return $next($request, $response);

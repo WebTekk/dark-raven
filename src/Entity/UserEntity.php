@@ -1,13 +1,13 @@
 <?php
 
-namespace App\DataRow;
+namespace App\Entity;
 
 use DateTime;
 
 /**
  * Class UserRow
  */
-class UserRow extends AbstractRow
+class UserEntity extends AbstractEntity
 {
     /**
      * @var int ID

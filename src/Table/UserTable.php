@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Model;
+namespace App\Table;
 
 
-use App\DataRow\UserRow;
+use App\Entity\UserEntity;
 use RuntimeException;
 
-class UserModel extends AbstractModel
+class UserTable extends AbstractTable
 {
     /**
      * @var string Table
@@ -31,9 +31,9 @@ class UserModel extends AbstractModel
      * Get user
      *
      * @param string $username Username
-     * @return UserRow
+     * @return UserEntity
      */
-    public function getUser(string $username): UserRow
+    public function getUser(string $username): UserEntity
     {
         $query = $this->newSelect();
         $selectors = [
@@ -49,14 +49,14 @@ class UserModel extends AbstractModel
         if (empty($row)) {
             throw new RuntimeException(__('User %s not found', $username));
         }
-        $user = new UserRow($row);
+        $user = new UserEntity($row);
         return $user;
     }
 
     /**
      * Load all users
      *
-     * @return UserRow[]
+     * @return UserEntity[]
      */
     public function loadAllUsers(): array
     {
@@ -75,7 +75,7 @@ class UserModel extends AbstractModel
         $rows = $query->execute()->fetchAll('assoc');
         $users = [];
         foreach ($rows as $row) {
-            $users[] = new UserRow($row);
+            $users[] = new UserEntity($row);
         }
         return $users;
     }

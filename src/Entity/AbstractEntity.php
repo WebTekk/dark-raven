@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: marc.wilhelm
- * Date: 21.12.2017
- * Time: 10:25
- */
 
-namespace App\DataRow;
+namespace App\Entity;
 
 use Zend\Hydrator\ObjectProperty as Hydrator;
 use Zend\Hydrator\NamingStrategy\UnderscoreNamingStrategy;
 
-class AbstractRow
+class AbstractEntity
 {
     /**
      * Entity constructor.

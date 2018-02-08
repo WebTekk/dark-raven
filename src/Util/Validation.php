@@ -1,11 +1,11 @@
 <?php
 
-namespace App\DataRow;
+namespace App\Util;
 
 /**
  * Class Validation
  */
-class Validation extends AbstractRow
+class Validation
 {
     /**
      * @var array Errors
