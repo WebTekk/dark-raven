@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
-
 /**
  * Class UserRow
  */
@@ -45,7 +43,7 @@ class UserEntity extends AbstractEntity
     public $lastName;
 
     /**
-     * @var DateTime Created at
+     * @var string Created at
      */
     public $createdAt;
 }
