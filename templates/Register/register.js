@@ -17,12 +17,6 @@ var Register = function () {
     this.registerOnPress = function (event) {
         event.preventDefault();
 
-        // var username = $this.form.find("[data-id=username]");
-        // var email = $this.form.find("[data-id=email]");
-        // var first_name = $this.form.find("[data-id=first_name]");
-        // var last_name = $this.form.find("[data-id=last_name]");
-        // var password = $this.form.find("[data-id=password]");
-        // var repeat_password = $this.form.find("[data-id=repeat_password]");
         var userData = {
             'username': $this.form.find("[data-id=username]"),
             'email': $this.form.find("[data-id=email]"),
@@ -43,12 +37,14 @@ var Register = function () {
         if (userData.password.val() === "") {
             userData.password.closest('.form-group').addClass('has-error');
         }
+
+        this.sendRegister(userData);
     };
 
-    this.sendRegister = function (username, password) {
+    this.sendRegister = function (userData) {
         showLoader();
-        var url = baseurl() + "/login";
-        var requestData = {"username": username.val(), "password": password.val()};
+        var url = baseurl() + "/register";
+        var requestData = {"user": userData};
         $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -60,8 +56,6 @@ var Register = function () {
             if(data.success === true) {
                 $( location ).attr("href", baseurl());
             } else {
-                username.closest('.form-group').addClass('has-error');
-                password.closest('.form-group').addClass('has-error');
                 $this.form.find("[data-id=error-message]").show();
             }
             hideLoader();

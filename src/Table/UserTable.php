@@ -14,6 +14,24 @@ class UserTable extends AbstractTable
     protected $table = 'users';
 
     /**
+     * Add user
+     *
+     * @param array $user User
+     * @return void
+     */
+    public function addUser(array $user)
+    {
+        $values = [
+            'username' => $user['username'],
+            'first_name' => $user['firstName'],
+            'last_name' => $user['lastName'],
+            'email' => $user['email'],
+            'password' => password_hash($user['password'], PASSWORD_DEFAULT),
+        ];
+        $this->db->insert($this->table, $values);
+    }
+
+    /**
      * Check if user exists
      *
      * @param string $username

@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 
+use App\Entity\UserEntity;
+use App\Service\User\RegistrationService;
+use App\Table\UserTable;
 use Aura\Session\Session;
 use Cake\Database\Connection;
 use Interop\Container\Exception\ContainerException;
@@ -41,11 +44,25 @@ class RegisterController extends AppController
      * @param Response $response
      * @return Response
      */
-    public function index(Request $request, Response $response) : Response
+    public function index(Request $request, Response $response): Response
     {
         $viewData = [
             'page' => 'Register',
         ];
         return $this->render($request, $response, 'Register/register.twig', $viewData);
+    }
+
+    public function register(Request $request, Response $response): Response
+    {
+        $registrationService = new RegistrationService($this->db);
+        $userTable = new UserTable($this->db);
+        $data = $request->getParsedBody();
+        $validation = $registrationService->validateUser($data['user']);
+        if (!$validation->isValid()) {
+            $viewData['errors'] = $validation->getErrors();
+            return $response->withJson(json_encode($viewData));
+        }
+        $userTable->addUser($data['user']);
+        return $response->withJson(json_encode(['result']));
     }
 }

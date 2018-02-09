@@ -11,6 +11,7 @@ $app->get('/' . $language . '/logout', 'App\Controller\AuthenticationController:
 
 // Register
 $app->get('/' . $language . '/register', 'App\Controller\RegisterController:index')->setName('getRegister');
+$app->post('/' . $language . '/register', 'App\Controller\RegisterController:register')->setName('postRegister');
 
 // User list
 $app->get('/' . $language . '/users', 'App\Controller\UserController:index')->setName('userList');
