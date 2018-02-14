@@ -23,9 +23,17 @@ $app->add(function (Request $request, Response $response, $next) use ($container
         'postRegister',
         'logout',
    ];
+    $authorizationRoutes = [
+        'getRegister',
+        'postRegister',
+        'getLogin',
+        'postLogin',
+    ];
     $segment = $session->getSegment('session');
     $role = $segment->get('role');
-    // TOdO: implement as constant Role::ROLE_ADMIN
+    if ($role && in_array($routeName, $authorizationRoutes)) {
+        return $response->withRedirect($this->router->pathFor('notFound', ['language' => $locale]));
+    }
     if ($role !== 'ROLE_ADMIN' && !in_array($routeName, $publicRoutes)) {
         return $response->withRedirect($this->router->pathFor('notFound', ['language' => $locale]));
     }
