@@ -23,8 +23,8 @@ class UserTable extends AbstractTable
     {
         $values = [
             'username' => $user['username'],
-            'first_name' => $user['firstName'],
-            'last_name' => $user['lastName'],
+            'first_name' => $user['first_name'],
+            'last_name' => $user['last_name'],
             'email' => $user['email'],
             'password' => password_hash($user['password'], PASSWORD_DEFAULT),
         ];

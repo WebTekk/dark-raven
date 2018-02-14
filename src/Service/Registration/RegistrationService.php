@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Service\User;
+namespace App\Service\Registration;
 
-use App\Entity\UserEntity;
 use App\Table\UserTable;
 use App\Util\Validation;
 use Cake\Database\Connection;

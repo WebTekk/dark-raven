@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 
-use App\Entity\UserEntity;
-use App\Service\User\RegistrationService;
+use App\Service\Registration\RegistrationService;
 use App\Table\UserTable;
 use Aura\Session\Session;
 use Cake\Database\Connection;
@@ -59,10 +58,13 @@ class RegisterController extends AppController
         $data = $request->getParsedBody();
         $validation = $registrationService->validateUser($data['user']);
         if (!$validation->isValid()) {
-            $viewData['errors'] = $validation->getErrors();
+            $viewData = [
+                'errors' => $validation->getErrors(),
+                'success' => false,
+            ];
             return $response->withJson(json_encode($viewData));
         }
         $userTable->addUser($data['user']);
-        return $response->withJson(json_encode(['result']));
+        return $response->withJson(json_encode(['success' => true]));
     }
 }

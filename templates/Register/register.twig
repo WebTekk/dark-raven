@@ -1,7 +1,7 @@
 {% extends "Layout/layout.twig" %}
 
 {% block assets %}
-    {{ assets({files: ['Login/login.js'], name: 'login.js'}) }}
+    {{ assets({files: ['Register/register.js'], name: 'register.js'}) }}
 {% endblock %}
 
 {% block content %}
@@ -13,36 +13,48 @@
             <div class="col-sm-4">
                 <input type="text" class="form-control" data-id="username" placeholder="{{ __('Username') }}">
             </div>
+            <div class="col-sm-4"></div>
+            <p class="text-danger col-sm-4 col-sm-offset-4"></p>
         </div>
         <div class="form-group">
             <label for="email" class="col-sm-4 control-label">{{ __('E-Mail') }}</label>
             <div class="col-sm-4">
                 <input type="email" class="form-control" data-id="email" placeholder="{{ __('Password') }}">
             </div>
+            <div class="col-sm-4"></div>
+            <p class="text-danger col-sm-4 col-sm-offset-4"></p>
         </div>
         <div class="form-group">
             <label for="first_name" class="col-sm-4 control-label">{{ __('First name') }}</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" data-id="first_name" placeholder="{{ __('First name') }}">
             </div>
+            <div class="col-sm-4"></div>
+            <p class="text-danger col-sm-4 col-sm-offset-4"></p>
         </div>
         <div class="form-group">
             <label for="last_name" class="col-sm-4 control-label">{{ __('Last name') }}</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" data-id="last_name" placeholder="{{ __('Last name') }}">
             </div>
+            <div class="col-sm-4"></div>
+            <p class="text-danger col-sm-4 col-sm-offset-4"></p>
         </div>
         <div class="form-group">
             <label for="password" class="col-sm-4 control-label">{{ __('Password') }}</label>
             <div class="col-sm-4">
                 <input type="password" class="form-control" data-id="password" placeholder="{{ __('Password') }}">
             </div>
+            <div class="col-sm-4"></div>
+            <p class="text-danger col-sm-4 col-sm-offset-4"></p>
         </div>
         <div class="form-group">
             <label for="repeat_password" class="col-sm-4 control-label">{{ __('Repeat password') }}</label>
             <div class="col-sm-4">
                 <input type="password" class="form-control" data-id="repeat_password" placeholder="{{ __('Password') }}">
             </div>
+            <div class="col-sm-4"></div>
+            <p class="text-danger col-sm-4 col-sm-offset-4"></p>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-4 col-sm-4">

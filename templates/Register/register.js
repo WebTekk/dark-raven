@@ -17,7 +17,7 @@ var Register = function () {
     this.registerOnPress = function (event) {
         event.preventDefault();
 
-        var userData = {
+        var userDataFields = {
             'username': $this.form.find("[data-id=username]"),
             'email': $this.form.find("[data-id=email]"),
             'first_name': $this.form.find("[data-id=first_name]"),
@@ -25,23 +25,56 @@ var Register = function () {
             'password': $this.form.find("[data-id=password]"),
             'repeat_password': $this.form.find("[data-id=repeat_password]")
         };
-        userData.username.closest('.form-group').removeClass('has-error');
-        userData.password.closest('.form-group').removeClass('has-error');
 
-        if (userData.username.val() !== "" && userData.password.val() !== "") {
-            $this.sendRegister(userData.username, userData.password);
-        }
-        if (userData.username.val() === "") {
-            userData.username.closest('.form-group').addClass('has-error');
-        }
-        if (userData.password.val() === "") {
-            userData.password.closest('.form-group').addClass('has-error');
-        }
+        $this.resetValidation(userDataFields);
 
-        this.sendRegister(userData);
+        var userData = $this.getValueFromFields(userDataFields);
+
+        if ($this.validateForm(userData, userDataFields)) {
+            $this.sendRegister(userData, userDataFields);
+        }
     };
 
-    this.sendRegister = function (userData) {
+    this.validateForm = function (userData, userDataFields) {
+        var valid = true;
+        for (var key in userData) {
+            if (userData[key] === "") {
+                valid = false;
+                userDataFields[key].closest('.form-group').addClass('has-error');
+                userDataFields[key].closest('.form-group').find('p').text('Please verify your input');
+            }
+        }
+        if (userData.password !== userData.repeat_password && userData.password !== "") {
+            valid = false;
+            userDataFields.password.closest('.form-group').addClass('has-error');
+            userDataFields.password.closest('.form-group').find('p').text('Passwords doesn\'t match');
+            userDataFields.repeat_password.closest('.form-group').addClass('has-error');
+        }
+        return valid;
+    };
+
+    this.getValueFromFields = function (userDataFields) {
+        var userData = {};
+        for (var key in userDataFields) {
+            userData[key] = userDataFields[key].val();
+        }
+        return userData;
+    };
+
+    this.resetValidation = function (userDataFields) {
+        for (var key in userDataFields) {
+            userDataFields[key].closest('.form-group').removeClass('has-error');
+            userDataFields[key].closest('.form-group').find('p').text('');
+        }
+    };
+
+    this.clearForm = function (userDataFields) {
+        for (var key in userDataFields) {
+            userDataFields[key].val('');
+        }
+    };
+
+    this.sendRegister = function (userData, userDataFields) {
         showLoader();
         var url = baseurl() + "/register";
         var requestData = {"user": userData};
@@ -53,10 +86,15 @@ var Register = function () {
             data: JSON.stringify(requestData)
         }).done(function (json) {
             var data = JSON.parse(json);
-            if(data.success === true) {
-                $( location ).attr("href", baseurl());
+            if (data.success === true) {
+                $this.resetValidation(userDataFields);
+                $this.clearForm(userDataFields);
             } else {
                 $this.form.find("[data-id=error-message]").show();
+                for (var key in data.errors){
+                    userDataFields[key].closest('.form-group').addClass('has-error');
+                    userDataFields[key].closest('.form-group').find('p').text(data.errors[key]);
+                }
             }
             hideLoader();
         });
