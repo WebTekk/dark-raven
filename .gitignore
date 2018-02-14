@@ -4,3 +4,4 @@ tmp/cache/*
 public/assets/*
 .idea
 composer.lock
+build/*
