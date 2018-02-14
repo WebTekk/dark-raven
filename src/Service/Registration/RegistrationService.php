@@ -36,6 +36,7 @@ class RegistrationService
         $validation = $this->validateName('first_name', $user['first_name'], $validation);
         $validation = $this->validateName('last_name', $user['last_name'], $validation);
         $validation = $this->validateUsername($user['username'], $validation);
+        $validation = $this->validateEmail($user['email'], $validation);
         return $validation;
     }
 
