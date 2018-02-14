@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-02-02 14:01+0100\n"
-"PO-Revision-Date: 2018-02-02 14:01+0100\n"
+"POT-Creation-Date: 2018-02-14 10:49+0100\n"
+"PO-Revision-Date: 2018-02-14 10:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -17,40 +17,123 @@ msgstr ""
 "X-Poedit-SearchPath-1: templates\n"
 "X-Poedit-SearchPath-2: tmp/cache/twig\n"
 
-#: src/Model/UserModel.php:50
-#, php-format
-msgid "User %s not found"
-msgstr "Benutzer %s nicht gefunden"
-
-#: src/Service/Authentication/AuthenticationService.php:87
+#: src/Service/Authentication/AuthenticationService.php:81
 #, php-format
 msgid "The user %s does not exist."
 msgstr "Der Benutzer %s existiert nicht."
 
-#: src/Service/Authentication/AuthenticationService.php:92
+#: src/Service/Authentication/AuthenticationService.php:86
+#: src/Service/Registration/RegistrationService.php:108
 msgid "invalid"
 msgstr "ungültig"
 
-#: src/Service/Authentication/AuthenticationService.php:108
+#: src/Service/Authentication/AuthenticationService.php:102
 msgid "too short"
 msgstr "zu kurz"
 
-#: src/Service/Authentication/AuthenticationService.php:111
+#: src/Service/Authentication/AuthenticationService.php:105
 msgid "password invalid"
 msgstr "Passwort ungültig"
 
-#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:95
-msgid "Home"
-msgstr "Startseite"
+#: src/Service/Registration/RegistrationService.php:53
+#: src/Service/Registration/RegistrationService.php:88
+msgid "to short"
+msgstr "zu kurz"
 
-#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:105
-msgid "Logout"
-msgstr "Abmelden"
+#: src/Service/Registration/RegistrationService.php:57
+msgid "Passwords don't match"
+msgstr "Passwörter stimmen nicht überein"
 
-#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:115
+#: src/Service/Registration/RegistrationService.php:93
+#, php-format
+msgid "User %s already exists."
+msgstr "Der Benutzer %s existiert bereits."
+
+#: src/Table/UserTable.php:68
+#, php-format
+msgid "User %s not found"
+msgstr "Benutzer %s nicht gefunden"
+
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:43
+#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:154
 #: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:43
 msgid "Login"
 msgstr "Anmelden"
+
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:50
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:55
+#: tmp/cache/twig/35/3526c37aed94ba61231e8a52c554d65e8687ab55fbae6af09cc3b40601e9698b.php:57
+#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:58
+#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:63
+msgid "Username"
+msgstr "Benutzername"
+
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:64
+#: tmp/cache/twig/35/3526c37aed94ba61231e8a52c554d65e8687ab55fbae6af09cc3b40601e9698b.php:69
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:69
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:106
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:111
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:125
+#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:70
+#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:75
+msgid "Password"
+msgstr "Passwort"
+
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:78
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:83
+#: tmp/cache/twig/35/3526c37aed94ba61231e8a52c554d65e8687ab55fbae6af09cc3b40601e9698b.php:61
+msgid "First name"
+msgstr "Vorname"
+
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:92
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:97
+#: tmp/cache/twig/35/3526c37aed94ba61231e8a52c554d65e8687ab55fbae6af09cc3b40601e9698b.php:65
+msgid "Last name"
+msgstr "Nachname"
+
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:120
+msgid "Repeat password"
+msgstr "Passwort wiederholen"
+
+#: tmp/cache/twig/2b/2b88527d7636489498feca53be75782ed47fd89822e90117a3ac776f5bb3db72.php:135
+msgid "Register"
+msgstr "Registrieren"
+
+#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:97
+msgid "Home"
+msgstr "Startseite"
+
+#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:108
+#: tmp/cache/twig/35/3526c37aed94ba61231e8a52c554d65e8687ab55fbae6af09cc3b40601e9698b.php:45
+msgid "Users"
+msgstr "Benutzer"
+
+#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:121
+msgid "Language"
+msgstr "Sprache"
+
+#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:128
+msgid "English"
+msgstr "Englisch"
+
+#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:134
+msgid "German"
+msgstr "Deutshc"
+
+#: tmp/cache/twig/2f/2f35de804705e8e4e3ea3b9b3df1e409883e5894104728df00452b1e6485cc0a.php:144
+msgid "Logout"
+msgstr "Abmelden"
+
+#: tmp/cache/twig/35/3526c37aed94ba61231e8a52c554d65e8687ab55fbae6af09cc3b40601e9698b.php:53
+msgid "ID"
+msgstr "ID"
+
+#: tmp/cache/twig/35/3526c37aed94ba61231e8a52c554d65e8687ab55fbae6af09cc3b40601e9698b.php:73
+msgid "Role"
+msgstr "Rang"
 
 #: tmp/cache/twig/64/64ba3e8cd1a12c9fd454f95bcb87405f49c628e81382bfcc84ece86695db8b1a.php:43
 msgid "Tekk's homepage"
@@ -60,17 +143,11 @@ msgstr "Tekks Website"
 msgid "Username or password invalid."
 msgstr "Benutzername oder Passwort ungültig."
 
-#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:58
-#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:63
-msgid "Username"
-msgstr "Benutzername"
+#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:84
+msgid "No account? Register now!"
+msgstr "Kein Account? Jetzt registrieren!"
 
-#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:70
-#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:75
-msgid "Password"
-msgstr "Passwort"
-
-#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:83
+#: tmp/cache/twig/ef/ef2bdadd7490deec51b5f32ebe17c8943b1618041ec21ff490c97d8b1d51f4dc.php:91
 msgid "Sign in"
 msgstr "Anmelden"
 
