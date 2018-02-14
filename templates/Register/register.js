@@ -126,6 +126,11 @@ var Register = function () {
             if (data.success === true) {
                 $this.resetValidation(userDataFields);
                 $this.clearForm(userDataFields);
+                notif({
+                    msg: "User added",
+                    type: "success",
+                    position: "center"
+                });
             } else {
                 $this.form.find("[data-id=error-message]").show();
                 for (var key in data.errors){
