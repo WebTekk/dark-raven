@@ -3,17 +3,25 @@ var Register = function () {
     var $this = this;
 
     /**
-     * Layout constructor
+     * Register constructor
      */
     this.constructor = function () {
         this.form = $("[data-id=register_form]");
         this.registerEvents();
     };
 
+    /**
+     * Register events
+     */
     this.registerEvents = function () {
         this.form.find("#register_button").on('click', this.registerOnPress);
     };
 
+    /**
+     * Init register event
+     *
+     * @param event
+     */
     this.registerOnPress = function (event) {
         event.preventDefault();
 
@@ -35,6 +43,13 @@ var Register = function () {
         }
     };
 
+    /**
+     * Validate registration form
+     *
+     * @param userData
+     * @param userDataFields
+     * @returns {boolean}
+     */
     this.validateForm = function (userData, userDataFields) {
         var valid = true;
         for (var key in userData) {
@@ -53,6 +68,12 @@ var Register = function () {
         return valid;
     };
 
+    /**
+     * Get Value from input fields
+     *
+     * @param userDataFields
+     * @returns {{}}
+     */
     this.getValueFromFields = function (userDataFields) {
         var userData = {};
         for (var key in userDataFields) {
@@ -61,6 +82,11 @@ var Register = function () {
         return userData;
     };
 
+    /**
+     * Reset validation
+     *
+     * @param userDataFields
+     */
     this.resetValidation = function (userDataFields) {
         for (var key in userDataFields) {
             userDataFields[key].closest('.form-group').removeClass('has-error');
@@ -68,12 +94,23 @@ var Register = function () {
         }
     };
 
+    /**
+     * Clear form
+     *
+     * @param userDataFields
+     */
     this.clearForm = function (userDataFields) {
         for (var key in userDataFields) {
             userDataFields[key].val('');
         }
     };
 
+    /**
+     * Send registration
+     *
+     * @param userData
+     * @param userDataFields
+     */
     this.sendRegister = function (userData, userDataFields) {
         showLoader();
         var url = baseurl() + "/register";
