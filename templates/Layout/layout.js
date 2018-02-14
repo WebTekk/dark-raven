@@ -24,9 +24,9 @@ var Layout = function () {
         }).done(function (json) {
             var data = JSON.parse(json);
             if(data.logout === true) {
+                hideLoader();
                 $( location ).attr("href", baseurl());
             }
-            hideLoader();
         });
     };
 

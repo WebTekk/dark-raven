@@ -21,6 +21,7 @@ $app->add(function (Request $request, Response $response, $next) use ($container
         'notFound',
         'getRegister',
         'postRegister',
+        'logout',
    ];
     $segment = $session->getSegment('session');
     $role = $segment->get('role');
