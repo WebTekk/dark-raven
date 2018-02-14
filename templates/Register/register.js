@@ -131,6 +131,7 @@ var Register = function () {
                     type: "success",
                     position: "center"
                 });
+                $( location ).attr("href", baseurl());
             } else {
                 $this.form.find("[data-id=error-message]").show();
                 for (var key in data.errors){

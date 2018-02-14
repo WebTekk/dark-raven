@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Service\Authentication\AuthenticationService;
 use App\Service\Registration\RegistrationService;
 use App\Table\UserTable;
 use Aura\Session\Session;
@@ -65,6 +66,8 @@ class RegisterController extends AppController
             return $response->withJson(json_encode($viewData));
         }
         $userTable->addUser($data['user']);
+        $authenticationService = new AuthenticationService($this->db, $this->session);
+        $authenticationService->loginUser($data['user']['username']);
         return $response->withJson(json_encode(['success' => true]));
     }
 }
