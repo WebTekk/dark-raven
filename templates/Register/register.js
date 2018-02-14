@@ -15,6 +15,11 @@ var Register = function () {
      */
     this.registerEvents = function () {
         this.form.find("#register_button").on('click', this.registerOnPress);
+        $(document).on('keypress', function(e) {
+            if (e.which === 13) {
+                $this.registerOnPress(e);
+            }
+        });
     };
 
     /**

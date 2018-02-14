@@ -12,6 +12,11 @@ var Login = function () {
 
     this.registerEvents = function () {
         this.form.find("#login_button").on('click', this.loginOnPress);
+        $(document).on('keypress', function(e) {
+            if (e.which === 13) {
+                $this.loginOnPress(e);
+            }
+        });
     };
 
     this.loginOnPress = function (event) {
