@@ -40,7 +40,7 @@ class UserTable extends AbstractTable
     public function findUser(string $username): bool
     {
         $querry = $this->newSelect();
-        $querry->select(['username'])->where(['username' => $username]);
+        $querry->select(['username'])->where(['username' => $username, 'active' => 1]);
         $row = $querry->execute()->fetch('assoc');
         return !empty($row);
     }
@@ -62,7 +62,7 @@ class UserTable extends AbstractTable
         ];
         $query->select($selectors)
             ->leftJoin('roles', ['users.role_id = roles.id'])
-            ->where(['username' => $username]);
+            ->where(['username' => $username, 'active' => 1]);
         $row = $query->execute()->fetch('assoc');
         if (empty($row)) {
             throw new RuntimeException(__('User %s not found', $username));
