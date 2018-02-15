@@ -3,7 +3,7 @@ var Users = function () {
     var $this = this;
 
     /**
-     * Events constructor
+     * Users constructor
      */
     this.constructor = function () {
         this.screen = $('#target');
@@ -23,6 +23,9 @@ var Users = function () {
         $('#confirm-role').on('click', $this.confirmRoleOnPress);
     };
 
+    /**
+     * Activates when role change gets confirmed
+     */
     this.confirmRoleOnPress = function () {
         var modal = $('#role-modal');
         var id = modal.find('input[type=hidden]').val();
@@ -51,17 +54,28 @@ var Users = function () {
         });
     };
 
+    /**
+     * Role field on press
+     * @param event
+     */
     this.roleOnPress = function (event) {
         var userId = event.target.id;
         $('#role-modal').find('input[type=hidden]').val(userId);
     };
 
+    /**
+     * List all users
+     * @param data Users
+     */
     this.listUsers = function (data) {
         var template = $('#user-list').html();
         var rendered = Mustache.render(template, data);
         this.screen.html(rendered);
     };
 
+    /**
+     * Load users
+     */
     this.loadUsers = function () {
         showLoader();
         var url = baseurl() + '/users/load';

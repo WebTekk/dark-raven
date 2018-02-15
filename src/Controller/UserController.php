@@ -67,6 +67,13 @@ class UserController extends AppController
         return $response->withJson(json_encode($viewData));
     }
 
+    /**
+     * Edit user role
+     *
+     * @param Request $request Request
+     * @param Response $response Response
+     * @return Response Response
+     */
     public function updateRole(Request $request, Response $response): Response
     {
         $data = $request->getParsedBody();
