@@ -86,6 +86,7 @@ class UserTable extends AbstractTable
             'users.first_name',
             'users.last_name',
             'roles.role',
+            'roles.title AS role_name',
         ];
         $query->select($selectors)
             ->leftJoin('roles', ['users.role_id = roles.id'])
