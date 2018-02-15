@@ -51,6 +51,9 @@ var Users = function () {
         }).done(function (json) {
             var data = JSON.parse(json);
             hideLoader();
+            if (data.success === true) {
+                $( location ).attr("href", baseurl() + '/users');
+            }
         });
     };
 
