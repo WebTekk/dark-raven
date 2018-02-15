@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\User\UserService;
+use App\Table\UserTable;
 use Cake\Database\Connection;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
@@ -64,5 +65,18 @@ class UserController extends AppController
             'users' => $usersArray,
         ];
         return $response->withJson(json_encode($viewData));
+    }
+
+    public function updateRole(Request $request, Response $response): Response
+    {
+        $data = $request->getParsedBody();
+        if (empty($data['id']) || empty($data['role'])) {
+            return $response->withJson(json_encode(['success' => false]));
+        }
+
+        $userTable = new UserTable($this->db);
+        $userTable->updateRole($data['id'], $data['role']);
+
+        return $response->withJson(json_encode(['success' => true]));
     }
 }

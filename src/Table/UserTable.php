@@ -97,4 +97,18 @@ class UserTable extends AbstractTable
         }
         return $users;
     }
+
+    /**
+     * Update user role
+     *
+     * @param int $id Id
+     * @param string $role Role
+     * @return void
+     */
+    public function updateRole($id, $role)
+    {
+        $query = $this->db->newQuery()->from('roles')->select('id')->where(['role' => $role]);
+        $roleId = $query->execute()->fetch('assoc')['id'];
+        $this->db->update($this->table, ['role_id' => $roleId], ['id' => $id]);
+    }
 }

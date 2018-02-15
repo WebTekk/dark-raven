@@ -16,6 +16,7 @@ $app->post('/' . $language . '/register', 'App\Controller\RegisterController:reg
 // User list
 $app->get('/' . $language . '/users', 'App\Controller\UserController:index')->setName('userList');
 $app->get('/' . $language . '/users/load', 'App\Controller\UserController:loadAllUsers')->setName('loadUsers');
+$app->put('/' . $language . '/users/role', 'App\Controller\UserController:updateRole')->setName('putUserRole');
 
 // Language
 $app->get('/language/' . $language . '', 'App\Controller\LanguageController:language')->setName("language");
