@@ -25,5 +25,3 @@ function __($message)
 
     return $translated;
 }
-
-;
