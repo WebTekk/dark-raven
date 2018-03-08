@@ -1,5 +1,5 @@
 <h1>Slim Template</h1>
-[![StyleCI](https://styleci.io/repos/119064891/shield?branch=master)]
+<a href="https://styleci.io/repos/119064891"><img src="https://styleci.io/repos/119064891/shield?branch=master" alt="StyleCI"></a>
 
 This is a simple Slim template. <br/>
 <h3>Setup</h3>
