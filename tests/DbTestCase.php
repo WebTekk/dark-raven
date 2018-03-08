@@ -66,8 +66,9 @@ abstract class DbTestCase extends ApiTestCase
         $this->container = $this->app->getContainer();
         // Check if phinxlog table exists in database.
         $tableSchema = $this->container->get('settings')->get('db')['database'];
+        $sql = "SELECT 1 FROM information_schema.TABLES WHERE TABLE_SCHEMA = :tableschema AND TABLE_NAME = :phinxlog";
         $pdo = $this->getPdo();
-        $stmt = $pdo->prepare("SELECT 1 FROM information_schema.TABLES WHERE TABLE_SCHEMA = :tableschema AND TABLE_NAME = :phinxlog");
+        $stmt = $pdo->prepare($sql);
         $stmt->execute(['tableschema' => $tableSchema, 'phinxlog' => 'phinxlog']);
         $shouldMigrate = true;
         if ($stmt->fetch()) {
