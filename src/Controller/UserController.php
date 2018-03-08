@@ -22,6 +22,7 @@ class UserController extends AppController
 
     /**
      * EventController constructor.
+     *
      * @param Container $container Container
      * @throws ContainerException
      */
@@ -43,6 +44,7 @@ class UserController extends AppController
         $viewData = [
             'page' => 'Users',
         ];
+
         return $this->render($request, $response, 'User/userList.twig', $viewData);
     }
 
@@ -64,6 +66,7 @@ class UserController extends AppController
         $viewData = [
             'users' => $usersArray,
         ];
+
         return $response->withJson(json_encode($viewData));
     }
 

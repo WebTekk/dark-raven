@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Test;
+
 use Cake\Database\Connection;
 use Exception;
 use PDO;
@@ -11,22 +13,27 @@ use PHPUnit\DbUnit\TestCaseTrait;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Slim\Container;
+
 /**
  * Class DbTestCase
  */
 abstract class DbTestCase extends ApiTestCase
 {
     use TestCaseTrait;
+
     /**
      * @var PDO
      */
     private static $pdo = null;
+
     // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
     private $conn = null;
+
     /**
      * @var Container
      */
     private $container;
+
     /**
      * Get PDO object.
      *
@@ -40,8 +47,10 @@ abstract class DbTestCase extends ApiTestCase
             $pdo = $this->app->getContainer()->get(Connection::class)->getDriver()->connection();
             self::$pdo = $pdo;
         }
+
         return self::$pdo;
     }
+
     /**
      * Setup.
      *
@@ -78,6 +87,7 @@ abstract class DbTestCase extends ApiTestCase
         $this->truncateTables();
         Factory::INSERT()->execute($this->getConnection(), $this->getDataSet());
     }
+
     /**
      * Check if there is any pending migration.
      *
@@ -107,12 +117,14 @@ abstract class DbTestCase extends ApiTestCase
             }
             // remove everything after _ to get version from filename
             $version = substr($filename, 0, strpos($filename, '_'));
-            if (!isset($migratedVersions[$version])){
+            if (!isset($migratedVersions[$version])) {
                 return true;
             };
         }
+
         return false;
     }
+
     /**
      * Truncate all Tables.
      *
@@ -130,6 +142,7 @@ abstract class DbTestCase extends ApiTestCase
             }
         }
     }
+
     /**
      * Get Connection.
      *
@@ -142,8 +155,10 @@ abstract class DbTestCase extends ApiTestCase
         if ($this->conn === null) {
             $this->conn = $this->createDefaultDBConnection($this->getPdo());
         }
+
         return $this->conn;
     }
+
     /**
      * Generate Update row.
      *
@@ -161,6 +176,7 @@ abstract class DbTestCase extends ApiTestCase
             sort($parts);
             $row[$key] = implode($parts);
         }
+
         return $row;
     }
 }

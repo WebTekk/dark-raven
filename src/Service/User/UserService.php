@@ -2,10 +2,8 @@
 
 namespace App\Service\User;
 
-
 use App\Entity\UserEntity;
 use App\Table\UserTable;
-use Aura\Session\Session;
 use Cake\Database\Connection;
 
 class UserService
@@ -33,6 +31,7 @@ class UserService
     public function loadAllUsers()
     {
         $userModel = new UserTable($this->db);
+
         return $userModel->loadAllUsers();
     }
 }

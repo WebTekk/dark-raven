@@ -9,6 +9,7 @@ use Slim\Exception\NotFoundException;
 
 /**
  * Class IndexControllerTest
+ *
  * @coversDefaultClass App\Controller\HomeController
  */
 class HomeControllerTest extends ApiTestCase

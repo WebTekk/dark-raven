@@ -2,7 +2,6 @@
 
 namespace App\Service\Authentication;
 
-
 use App\Table\UserTable;
 use App\Util\Validation;
 use Aura\Session\Session;
@@ -38,7 +37,7 @@ class AuthenticationService
      * @param string $username Username
      * @return void
      */
-    public function loginUser(string $username):void
+    public function loginUser(string $username): void
     {
         $loginModel = new UserTable($this->db);
         $user = $loginModel->getUser($username);
@@ -47,7 +46,7 @@ class AuthenticationService
         $segment->set('username', $user->username);
         $segment->set('role', $user->role);
     }
-    
+
     /**
      * Validate login
      *
@@ -63,6 +62,7 @@ class AuthenticationService
             return $validation;
         }
         $validation = $this->validateAccount($username, $password, $validation);
+
         return $validation;
     }
 
@@ -79,12 +79,14 @@ class AuthenticationService
         $loginModel = new UserTable($this->db);
         if (!$loginModel->findUser($username)) {
             $validation->addError('username', __('The user %s does not exist.', $username));
+
             return $validation;
         }
         $user = $loginModel->getUser($username);
         if (!password_verify($password, $user->password)) {
             $validation->addError('password', __('invalid'));
         }
+
         return $validation;
     }
 
@@ -104,6 +106,7 @@ class AuthenticationService
         if (strlen($password) < 6) {
             $validation->addError('password', __('password invalid'));
         }
+
         return $validation;
     }
 }

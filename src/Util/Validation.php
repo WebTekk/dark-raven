@@ -19,7 +19,7 @@ class Validation
      * @param string $value Value
      * @return void
      */
-    public function addError(string $key, string $value) : void
+    public function addError(string $key, string $value): void
     {
         $this->errors[$key] = $value;
     }
@@ -29,7 +29,7 @@ class Validation
      *
      * @return bool
      */
-    public function isValid() : bool
+    public function isValid(): bool
     {
         return empty($this->errors);
     }
@@ -39,7 +39,7 @@ class Validation
      *
      * @return array Errors
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }

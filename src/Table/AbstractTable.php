@@ -2,7 +2,6 @@
 
 namespace App\Table;
 
-
 use Cake\Database\Connection;
 use Cake\Database\Query;
 
@@ -20,6 +19,7 @@ abstract class AbstractTable implements TableInterface
 
     /**
      * AppTable constructor.
+     *
      * @param Connection $connection Connection
      */
     public function __construct(Connection $connection)

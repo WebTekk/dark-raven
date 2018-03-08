@@ -2,7 +2,6 @@
 
 namespace App\Table;
 
-
 interface TableInterface
 {
 

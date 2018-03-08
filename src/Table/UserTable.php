@@ -2,7 +2,6 @@
 
 namespace App\Table;
 
-
 use App\Entity\UserEntity;
 use RuntimeException;
 
@@ -39,9 +38,10 @@ class UserTable extends AbstractTable
      */
     public function findUser(string $username): bool
     {
-        $querry = $this->newSelect();
-        $querry->select(['username'])->where(['username' => $username, 'active' => 1]);
-        $row = $querry->execute()->fetch('assoc');
+        $query = $this->newSelect();
+        $query->select(['username'])->where(['username' => $username, 'active' => 1]);
+        $row = $query->execute()->fetch('assoc');
+
         return !empty($row);
     }
 
@@ -68,6 +68,7 @@ class UserTable extends AbstractTable
             throw new RuntimeException(__('User %s not found', $username));
         }
         $user = new UserEntity($row);
+
         return $user;
     }
 
@@ -96,6 +97,7 @@ class UserTable extends AbstractTable
         foreach ($rows as $row) {
             $users[] = new UserEntity($row);
         }
+
         return $users;
     }
 

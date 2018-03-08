@@ -7,9 +7,9 @@ use Exception;
 use Slim\Exception\MethodNotAllowedException;
 use Slim\Exception\NotFoundException;
 
-
 /**
  * Class ErrorControllerTest
+ *
  * @coversDefaultClass App\Controller\ErrorController
  */
 class ErrorControllerTest extends ApiTestCase

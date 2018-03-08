@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Service\Authentication\AuthenticationService;
 use App\Service\Registration\RegistrationService;
 use App\Table\UserTable;
@@ -27,6 +26,7 @@ class RegisterController extends AppController
 
     /**
      * EventController constructor.
+     *
      * @param Container $container Container
      * @throws ContainerException
      */
@@ -49,6 +49,7 @@ class RegisterController extends AppController
         $viewData = [
             'page' => 'Register',
         ];
+
         return $this->render($request, $response, 'Register/register.twig', $viewData);
     }
 
@@ -63,11 +64,13 @@ class RegisterController extends AppController
                 'errors' => $validation->getErrors(),
                 'success' => false,
             ];
+
             return $response->withJson(json_encode($viewData));
         }
         $userTable->addUser($data['user']);
         $authenticationService = new AuthenticationService($this->db, $this->session);
         $authenticationService->loginUser($data['user']['username']);
+
         return $response->withJson(json_encode(['success' => true]));
     }
 }

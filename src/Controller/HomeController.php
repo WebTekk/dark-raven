@@ -17,11 +17,12 @@ class HomeController extends AppController
      * @param Response $response
      * @return Response
      */
-    public function index(Request $request, Response $response) : Response
+    public function index(Request $request, Response $response): Response
     {
         $viewData = [
             'page' => 'Home',
         ];
+
         return $this->render($request, $response, 'Home/home.twig', $viewData);
     }
 }

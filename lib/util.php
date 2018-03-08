@@ -8,11 +8,13 @@ use Symfony\Component\Translation\Translator;
  * @param mixed $message
  * @return string
  */
-function __($message) {
+function __($message)
+{
     static $translator = null;
     /* @var $translator Translator */
     if ($message instanceof Translator) {
         $translator = $message;
+
         return '';
     }
     $translated = $translator->trans($message);
@@ -22,4 +24,6 @@ function __($message) {
     }
 
     return $translated;
-};
+}
+
+;

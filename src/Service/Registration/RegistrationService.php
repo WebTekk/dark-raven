@@ -37,6 +37,7 @@ class RegistrationService
         $validation = $this->validateName('last_name', $user['last_name'], $validation);
         $validation = $this->validateUsername($user['username'], $validation);
         $validation = $this->validateEmail($user['email'], $validation);
+
         return $validation;
     }
 
@@ -52,11 +53,13 @@ class RegistrationService
     {
         if (strlen($password) <= 6) {
             $validation->addError('password', __('to short'));
+
             return $validation;
         }
         if ($password != $repeatPassword) {
             $validation->addError('repeat_password', __('Passwords don\'t match'));
         }
+
         return $validation;
     }
 
@@ -73,6 +76,7 @@ class RegistrationService
         if (empty($name)) {
             $validation->addError($key, 'missing');
         }
+
         return $validation;
     }
 
@@ -87,12 +91,14 @@ class RegistrationService
     {
         if (strlen($username) < 3) {
             $validation->addError('username', __('to short'));
+
             return $validation;
         }
         $userTable = new UserTable($this->db);
         if ($userTable->findUser($username)) {
             $validation->addError('username', __('User %s already exists.', $username));
         }
+
         return $validation;
     }
 
@@ -108,6 +114,7 @@ class RegistrationService
         if (!is_email($email)) {
             $validation->addError('email', __('invalid'));
         }
+
         return $validation;
     }
 }

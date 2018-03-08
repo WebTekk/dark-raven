@@ -9,6 +9,7 @@ class AbstractEntity
 {
     /**
      * Entity constructor.
+     *
      * @param array $row Row to hydrate
      */
     public function __construct(array $row = null)
@@ -30,6 +31,7 @@ class AbstractEntity
             $hydrator = new Hydrator();
             $hydrator->setNamingStrategy(new UnderscoreNamingStrategy());
         }
+
         return $hydrator;
     }
 

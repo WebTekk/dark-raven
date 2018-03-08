@@ -37,7 +37,7 @@ $container['environment'] = function (): Environment {
  * @return Twig
  * @throws \Interop\Container\Exception\ContainerException
  */
-$container[Twig::class] = function (Container $container) : Twig {
+$container[Twig::class] = function (Container $container): Twig {
     $twigSettings = $container->get('settings')->get('twig');
 
     $basePath = rtrim(str_ireplace('index.php', '', $container->get('request')->getUri()->getBasePath()), '/');

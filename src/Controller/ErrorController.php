@@ -14,9 +14,10 @@ class ErrorController extends AppController
      * @param Response $response
      * @return Response
      */
-    public function notFoundAction(Request $request, Response $response) : Response
+    public function notFoundAction(Request $request, Response $response): Response
     {
         $response = $response->withStatus(404);
+
         return $this->render($request, $response, 'Error/404.twig', []);
     }
 }

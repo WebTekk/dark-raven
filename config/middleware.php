@@ -22,7 +22,7 @@ $app->add(function (Request $request, Response $response, $next) use ($container
         'getRegister',
         'postRegister',
         'logout',
-   ];
+    ];
     $authorizationRoutes = [
         'getRegister',
         'postRegister',
@@ -37,6 +37,7 @@ $app->add(function (Request $request, Response $response, $next) use ($container
     if ($role !== 'ROLE_ADMIN' && !in_array($routeName, $publicRoutes)) {
         return $response->withRedirect($this->router->pathFor('notFound', ['language' => $locale]));
     }
+
     return $next($request, $response);
 });
 

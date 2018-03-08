@@ -76,6 +76,7 @@ class AppController
             ];
         }
         $viewData = array_merge_recursive($viewData, $default);
+
         return $this->twig->render($response, $file, $viewData);
     }
 }
