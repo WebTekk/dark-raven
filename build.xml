@@ -36,6 +36,19 @@
         </exec>
     </target>
 
+    <target name="php-cs-check" description="Check coding style">
+        <exec executable="${basedir}/vendor/bin/php-cs-fixer${ext}" searchpath="true" resolveexecutable="true"
+              failonerror="true">
+            <arg line="fix --dry-run --format=txt --verbose --diff --diff-format=udiff ${basedir}/src" />
+        </exec>
+    </target>
+    <target name="php-cs-fix" description="Fix coding style">
+        <exec executable="${basedir}/vendor/bin/php-cs-fixer${ext}" searchpath="true" resolveexecutable="true"
+              failonerror="true">
+            <arg line="fix --format=txt --verbose --diff --diff-format=udiff ${basedir}/src" />
+        </exec>
+    </target>
+
     <target name="phpstan" description="Test code for errors">
         <mkdir dir="${basedir}/build"/>
         <get src="https://github.com/phpstan/phpstan/releases/download/0.8/phpstan.phar"
