@@ -36,16 +36,16 @@
         </exec>
     </target>
 
-    <target name="php-cs-check" description="Check coding style">
+    <target name="check-style" description="Check coding style">
         <exec executable="${basedir}/vendor/bin/php-cs-fixer${ext}" searchpath="true" resolveexecutable="true"
               failonerror="true">
-            <arg line="fix --dry-run --format=txt --verbose --diff --diff-format=udiff ${basedir}/src" />
+            <arg line="fix --dry-run --format=txt --verbose --diff --diff-format=udiff --config ${basedir}/.cs.php ${basedir}/src" />
         </exec>
     </target>
-    <target name="php-cs-fix" description="Fix coding style">
+    <target name="fix-style" description="Fix coding style">
         <exec executable="${basedir}/vendor/bin/php-cs-fixer${ext}" searchpath="true" resolveexecutable="true"
               failonerror="true">
-            <arg line="fix --format=txt --verbose --diff --diff-format=udiff ${basedir}/src" />
+            <arg line="fix --format=txt --verbose --diff --diff-format=udiff --config ${basedir}/.cs.php ${basedir}/src" />
         </exec>
     </target>
 
