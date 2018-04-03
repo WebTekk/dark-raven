@@ -6,15 +6,16 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * Class HomeController
+ * Class HomeController.
  */
 class HomeController extends AppController
 {
     /**
-     * Home index
+     * Home index.
      *
      * @param Request $request
      * @param Response $response
+     *
      * @return Response
      */
     public function index(Request $request, Response $response): Response

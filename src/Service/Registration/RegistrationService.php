@@ -14,7 +14,7 @@ class RegistrationService
     protected $db;
 
     /**
-     * LoginService constructor
+     * LoginService constructor.
      *
      * @param Connection $connection Connection
      */
@@ -24,9 +24,10 @@ class RegistrationService
     }
 
     /**
-     * Validate new user
+     * Validate new user.
      *
      * @param array $user New user
+     *
      * @return Validation
      */
     public function validateUser(array $user): Validation
@@ -42,11 +43,12 @@ class RegistrationService
     }
 
     /**
-     * Validate password
+     * Validate password.
      *
      * @param string $password Password
      * @param string $repeatPassword Password verify
      * @param Validation $validation Validation
+     *
      * @return Validation
      */
     protected function validatePassword(string $password, string $repeatPassword, Validation $validation): Validation
@@ -64,11 +66,12 @@ class RegistrationService
     }
 
     /**
-     * Validate first name and last name
+     * Validate first name and last name.
      *
      * @param string $key Key
      * @param string $name First name or last name
      * @param Validation $validation Validation
+     *
      * @return Validation
      */
     protected function validateName(string $key, string $name, Validation $validation): Validation
@@ -81,10 +84,11 @@ class RegistrationService
     }
 
     /**
-     * Validate username
+     * Validate username.
      *
      * @param string $username Username
      * @param Validation $validation Validation
+     *
      * @return Validation
      */
     protected function validateUsername(string $username, Validation $validation): Validation
@@ -103,10 +107,11 @@ class RegistrationService
     }
 
     /**
-     * Validate email
+     * Validate email.
      *
      * @param string $email Email
      * @param Validation $validation Validation
+     *
      * @return Validation
      */
     public function validateEmail(string $email, Validation $validation): Validation

@@ -20,7 +20,7 @@ class AuthenticationService
     protected $session;
 
     /**
-     * LoginService constructor
+     * LoginService constructor.
      *
      * @param Connection $connection Connection
      * @param Session $session Session
@@ -32,9 +32,10 @@ class AuthenticationService
     }
 
     /**
-     * Set session
+     * Set session.
      *
      * @param string $username Username
+     *
      * @return void
      */
     public function loginUser(string $username): void
@@ -48,10 +49,11 @@ class AuthenticationService
     }
 
     /**
-     * Validate login
+     * Validate login.
      *
      * @param string $username Username
      * @param string $password Password
+     *
      * @return Validation
      */
     public function validateLogin(string $username, string $password)
@@ -67,11 +69,12 @@ class AuthenticationService
     }
 
     /**
-     * Validate username and password
+     * Validate username and password.
      *
      * @param string $username Username
      * @param string $password Password
      * @param Validation $validation Validation
+     *
      * @return Validation
      */
     protected function validateAccount(string $username, string $password, Validation $validation)
@@ -91,11 +94,12 @@ class AuthenticationService
     }
 
     /**
-     * Check the length of username and password
+     * Check the length of username and password.
      *
      * @param string $username Username
      * @param string $password Password
      * @param Validation $validation Validation
+     *
      * @return Validation
      */
     protected function validateLength(string $username, string $password, Validation $validation)

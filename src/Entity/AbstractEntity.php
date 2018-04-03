@@ -46,7 +46,7 @@ class AbstractEntity
     }
 
     /**
-     * To json
+     * To json.
      *
      * @return string Json
      */

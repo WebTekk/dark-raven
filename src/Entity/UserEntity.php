@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 /**
- * Class UserRow
+ * Class UserRow.
  */
 class UserEntity extends AbstractEntity
 {

@@ -11,7 +11,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * Class HomeController
+ * Class HomeController.
  */
 class UserController extends AppController
 {
@@ -24,6 +24,7 @@ class UserController extends AppController
      * EventController constructor.
      *
      * @param Container $container Container
+     *
      * @throws ContainerException
      */
     public function __construct(Container $container)
@@ -33,10 +34,11 @@ class UserController extends AppController
     }
 
     /**
-     * User index
+     * User index.
      *
      * @param Request $request
      * @param Response $response
+     *
      * @return Response
      */
     public function index(Request $request, Response $response): Response
@@ -49,10 +51,11 @@ class UserController extends AppController
     }
 
     /**
-     * Load all users
+     * Load all users.
      *
      * @param Request $request Request
      * @param Response $response Response
+     *
      * @return Response
      */
     public function loadAllUsers(Request $request, Response $response): Response
@@ -71,10 +74,11 @@ class UserController extends AppController
     }
 
     /**
-     * Edit user role
+     * Edit user role.
      *
      * @param Request $request Request
      * @param Response $response Response
+     *
      * @return Response Response
      */
     public function updateRole(Request $request, Response $response): Response

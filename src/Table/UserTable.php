@@ -13,9 +13,10 @@ class UserTable extends AbstractTable
     protected $table = 'users';
 
     /**
-     * Add user
+     * Add user.
      *
      * @param array $user User
+     *
      * @return void
      */
     public function addUser(array $user)
@@ -31,9 +32,10 @@ class UserTable extends AbstractTable
     }
 
     /**
-     * Check if user exists
+     * Check if user exists.
      *
      * @param string $username
+     *
      * @return bool
      */
     public function findUser(string $username): bool
@@ -46,9 +48,10 @@ class UserTable extends AbstractTable
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @param string $username Username
+     *
      * @return UserEntity
      */
     public function getUser(string $username): UserEntity
@@ -73,7 +76,7 @@ class UserTable extends AbstractTable
     }
 
     /**
-     * Load all users
+     * Load all users.
      *
      * @return UserEntity[]
      */
@@ -102,10 +105,11 @@ class UserTable extends AbstractTable
     }
 
     /**
-     * Update user role
+     * Update user role.
      *
      * @param int $id Id
      * @param string $role Role
+     *
      * @return void
      */
     public function updateRole($id, $role)

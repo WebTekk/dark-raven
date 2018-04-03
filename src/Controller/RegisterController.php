@@ -28,6 +28,7 @@ class RegisterController extends AppController
      * EventController constructor.
      *
      * @param Container $container Container
+     *
      * @throws ContainerException
      */
     public function __construct(Container $container)
@@ -38,10 +39,11 @@ class RegisterController extends AppController
     }
 
     /**
-     * Layout page index
+     * Layout page index.
      *
      * @param Request $request
      * @param Response $response
+     *
      * @return Response
      */
     public function index(Request $request, Response $response): Response

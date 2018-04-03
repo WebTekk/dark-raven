@@ -8,10 +8,11 @@ use Slim\Http\Response;
 class ErrorController extends AppController
 {
     /**
-     * Not found action
+     * Not found action.
      *
      * @param Request $request
      * @param Response $response
+     *
      * @return Response
      */
     public function notFoundAction(Request $request, Response $response): Response

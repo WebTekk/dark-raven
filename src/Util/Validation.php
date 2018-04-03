@@ -3,7 +3,7 @@
 namespace App\Util;
 
 /**
- * Class Validation
+ * Class Validation.
  */
 class Validation
 {
@@ -13,10 +13,11 @@ class Validation
     protected $errors = [];
 
     /**
-     * Adds new error
+     * Adds new error.
      *
      * @param string $key Key
      * @param string $value Value
+     *
      * @return void
      */
     public function addError(string $key, string $value): void
@@ -25,7 +26,7 @@ class Validation
     }
 
     /**
-     * Return true if there are no errors
+     * Return true if there are no errors.
      *
      * @return bool
      */
@@ -35,7 +36,7 @@ class Validation
     }
 
     /**
-     * Return all errors
+     * Return all errors.
      *
      * @return array Errors
      */

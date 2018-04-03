@@ -12,7 +12,7 @@ use Slim\Router;
 use Slim\Views\Twig;
 
 /**
- * Class AppController
+ * Class AppController.
  */
 class AppController
 {
@@ -40,6 +40,7 @@ class AppController
      * AppController constructor.
      *
      * @param Container $container Container
+     *
      * @throws ContainerException
      */
     public function __construct(Container $container)
@@ -57,6 +58,7 @@ class AppController
      * @param Response $response
      * @param string $file
      * @param array $viewData
+     *
      * @return Response
      */
     public function render(Request $request, Response $response, string $file, array $viewData): Response

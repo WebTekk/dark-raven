@@ -26,6 +26,7 @@ class AuthenticationController extends AppController
      * EventController constructor.
      *
      * @param Container $container Container
+     *
      * @throws ContainerException
      */
     public function __construct(Container $container)
@@ -36,10 +37,11 @@ class AuthenticationController extends AppController
     }
 
     /**
-     * Layout page index
+     * Layout page index.
      *
      * @param Request $request
      * @param Response $response
+     *
      * @return Response
      */
     public function index(Request $request, Response $response): Response
@@ -52,10 +54,11 @@ class AuthenticationController extends AppController
     }
 
     /**
-     * Layout
+     * Layout.
      *
      * @param Request $request
      * @param Response $response
+     *
      * @return Response
      */
     public function login(Request $request, Response $response): Response
@@ -82,10 +85,11 @@ class AuthenticationController extends AppController
     }
 
     /**
-     * Log out user
+     * Log out user.
      *
      * @param Request $request
      * @param Response $response
+     *
      * @return Response
      */
     public function logout(Request $request, Response $response): Response

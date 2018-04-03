@@ -14,7 +14,7 @@ class UserService
     protected $db;
 
     /**
-     * LoginService constructor
+     * LoginService constructor.
      *
      * @param Connection $connection Connection
      */
@@ -24,7 +24,7 @@ class UserService
     }
 
     /**
-     * Get all users
+     * Get all users.
      *
      * @return UserEntity[]
      */
