@@ -6,6 +6,9 @@ use App\Table\UserTable;
 use App\Util\Validation;
 use Cake\Database\Connection;
 
+/**
+ * RegistrationService
+ */
 class RegistrationService
 {
     /**

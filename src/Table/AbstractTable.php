@@ -5,6 +5,9 @@ namespace App\Table;
 use Cake\Database\Connection;
 use Cake\Database\Query;
 
+/**
+ * AbstractTable
+ */
 abstract class AbstractTable implements TableInterface
 {
     /**

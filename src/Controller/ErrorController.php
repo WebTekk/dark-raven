@@ -5,6 +5,9 @@ namespace App\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+/**
+ * ErrorController
+ */
 class ErrorController extends AppController
 {
     /**

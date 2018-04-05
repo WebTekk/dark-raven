@@ -49,6 +49,17 @@
         </exec>
     </target>
 
+    <target name="check-doc" description="Check DocBlocks">
+        <exec executable="${basedir}/vendor/bin/docblock-checker${ext}" searchpath="true" resolveexecutable="true"
+              failonerror="true">
+            <arg line="--directory src --no-interaction" />
+        </exec>
+        <exec executable="${basedir}/vendor/bin/docblock-checker${ext}" searchpath="true" resolveexecutable="true"
+              failonerror="true">
+            <arg line="--directory tests --no-interaction" />
+        </exec>
+    </target>
+
     <target name="phpstan" description="Test code for errors">
         <mkdir dir="${basedir}/build"/>
         <get src="https://github.com/phpstan/phpstan/releases/download/0.8/phpstan.phar"

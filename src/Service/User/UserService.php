@@ -6,6 +6,9 @@ use App\Entity\UserEntity;
 use App\Table\UserTable;
 use Cake\Database\Connection;
 
+/**
+ * UserService
+ */
 class UserService
 {
     /**

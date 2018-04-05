@@ -5,6 +5,8 @@ namespace App\Test;
 use Aura\Session\Session;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 use Slim\App;
 use Slim\Container;
@@ -89,12 +91,12 @@ abstract class ApiTestCase extends TestCase
      * Make silent request.
      *
      * @param Request $request
-     * @return Response
+     * @return ResponseInterface
      * @throws Exception
      * @throws MethodNotAllowedException
      * @throws NotFoundException
      */
-    protected function request(Request $request): Response
+    protected function request(Request $request): ResponseInterface
     {
         $container = $this->getContainer();
         $this->setContainer($container, 'request', $request);
@@ -109,7 +111,7 @@ abstract class ApiTestCase extends TestCase
      *
      * @param Container $container
      * @param string $key
-     * @param $value
+     * @param mixed $value
      * @return void
      */
     protected function setContainer(Container $container, string $key, $value)
@@ -126,9 +128,9 @@ abstract class ApiTestCase extends TestCase
     /**
      * Get container object for tests.
      *
-     * @return Container
+     * @return ContainerInterface
      */
-    protected function getContainer(): Container
+    protected function getContainer(): ContainerInterface
     {
         $container = $this->app->getContainer();
 

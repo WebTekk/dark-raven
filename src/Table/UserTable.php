@@ -5,6 +5,9 @@ namespace App\Table;
 use App\Entity\UserEntity;
 use RuntimeException;
 
+/**
+ * UserTable
+ */
 class UserTable extends AbstractTable
 {
     /**

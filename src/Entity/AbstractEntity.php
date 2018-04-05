@@ -5,12 +5,15 @@ namespace App\Entity;
 use Zend\Hydrator\ObjectProperty as Hydrator;
 use Zend\Hydrator\NamingStrategy\UnderscoreNamingStrategy;
 
+/**
+ * AbstractEntity
+ */
 class AbstractEntity
 {
     /**
      * Entity constructor.
      *
-     * @param array $row Row to hydrate
+     * @param array|null $row Row to hydrate
      */
     public function __construct(array $row = null)
     {

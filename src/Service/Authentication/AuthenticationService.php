@@ -7,6 +7,9 @@ use App\Util\Validation;
 use Aura\Session\Session;
 use Cake\Database\Connection;
 
+/**
+ * AuthenticationService
+ */
 class AuthenticationService
 {
     /**

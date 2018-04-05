@@ -12,6 +12,9 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+/**
+ * RegisterController
+ */
 class RegisterController extends AppController
 {
     /**
@@ -41,8 +44,8 @@ class RegisterController extends AppController
     /**
      * Layout page index.
      *
-     * @param Request $request
-     * @param Response $response
+     * @param Request $request Request
+     * @param Response $response Response
      *
      * @return Response
      */
@@ -55,6 +58,13 @@ class RegisterController extends AppController
         return $this->render($request, $response, 'Register/register.twig', $viewData);
     }
 
+    /**
+     * Register action
+     *
+     * @param Request $request Request
+     * @param Response $response Response
+     * @return Response
+     */
     public function register(Request $request, Response $response): Response
     {
         $registrationService = new RegistrationService($this->db);

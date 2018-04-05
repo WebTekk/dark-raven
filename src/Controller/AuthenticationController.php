@@ -10,6 +10,9 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+/**
+ * AuthenticationController.
+ */
 class AuthenticationController extends AppController
 {
     /**
