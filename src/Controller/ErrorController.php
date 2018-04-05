@@ -6,7 +6,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * ErrorController
+ * ErrorController.
  */
 class ErrorController extends AppController
 {

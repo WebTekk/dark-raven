@@ -6,7 +6,7 @@ use Cake\Database\Connection;
 use Cake\Database\Query;
 
 /**
- * AbstractTable
+ * AbstractTable.
  */
 abstract class AbstractTable implements TableInterface
 {

@@ -7,7 +7,7 @@ use App\Table\UserTable;
 use Cake\Database\Connection;
 
 /**
- * UserService
+ * UserService.
  */
 class UserService
 {

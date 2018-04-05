@@ -6,7 +6,7 @@ use App\Entity\UserEntity;
 use RuntimeException;
 
 /**
- * UserTable
+ * UserTable.
  */
 class UserTable extends AbstractTable
 {

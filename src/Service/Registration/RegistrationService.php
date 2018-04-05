@@ -7,7 +7,7 @@ use App\Util\Validation;
 use Cake\Database\Connection;
 
 /**
- * RegistrationService
+ * RegistrationService.
  */
 class RegistrationService
 {

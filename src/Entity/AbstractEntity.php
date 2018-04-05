@@ -6,7 +6,7 @@ use Zend\Hydrator\ObjectProperty as Hydrator;
 use Zend\Hydrator\NamingStrategy\UnderscoreNamingStrategy;
 
 /**
- * AbstractEntity
+ * AbstractEntity.
  */
 class AbstractEntity
 {

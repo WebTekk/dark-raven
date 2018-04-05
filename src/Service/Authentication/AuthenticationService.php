@@ -8,7 +8,7 @@ use Aura\Session\Session;
 use Cake\Database\Connection;
 
 /**
- * AuthenticationService
+ * AuthenticationService.
  */
 class AuthenticationService
 {

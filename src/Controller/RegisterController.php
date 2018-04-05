@@ -13,7 +13,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * RegisterController
+ * RegisterController.
  */
 class RegisterController extends AppController
 {
@@ -59,10 +59,11 @@ class RegisterController extends AppController
     }
 
     /**
-     * Register action
+     * Register action.
      *
      * @param Request $request Request
      * @param Response $response Response
+     *
      * @return Response
      */
     public function register(Request $request, Response $response): Response
