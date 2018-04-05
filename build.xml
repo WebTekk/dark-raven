@@ -49,7 +49,7 @@
         </exec>
     </target>
 
-    <target name="check-doc" description="Check DocBlocks">
+    <target name="check-docblock" description="Check DocBlocks">
         <exec executable="${basedir}/vendor/bin/docblock-checker${ext}" searchpath="true" resolveexecutable="true"
               failonerror="true">
             <arg line="--directory src --no-interaction" />
