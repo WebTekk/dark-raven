@@ -9,8 +9,6 @@ enabled:
   - phpdoc_no_package
   - phpdoc_scalar
   - phpdoc_types
-  - unix_line_endings
-
 
 linting: true
 
