@@ -1,6 +1,7 @@
 <h1>Slim Template</h1>
 <a href="https://styleci.io/repos/119064891"><img src="https://styleci.io/repos/119064891/shield?branch=master" alt="StyleCI"></a>
 <a href="https://travis-ci.org/TekkCraft/slim_website?branch=master"><img src="https://travis-ci.org/TekkCraft/slim_website.svg?branch=master"></a>
+<a href="https://scrutinizer-ci.com/g/TekkCraft/slim_website/"><img src="https://scrutinizer-ci.com/g/TekkCraft/slim_website/badges/quality-score.png?b=master" alt="ScrutinizerCI"></a>
 
 This is a simple Slim template. <br/>
 <h3>Setup</h3>
