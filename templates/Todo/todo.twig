@@ -1,0 +1,11 @@
+{% extends "Layout/layout.twig" %}
+
+{% block assets %}
+    {{ assets({files: ['Todo/todo.js'], name: 'todo.js'}) }}
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ __('TODO\'s') }}</h1>
+
+{% endblock %}

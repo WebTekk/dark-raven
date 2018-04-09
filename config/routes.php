@@ -18,6 +18,9 @@ $app->get('/' . $language . '/users', 'App\Controller\UserController:index')->se
 $app->get('/' . $language . '/users/load', 'App\Controller\UserController:loadAllUsers')->setName('loadUsers');
 $app->put('/' . $language . '/users/role', 'App\Controller\UserController:updateRole')->setName('putUserRole');
 
+// To do
+$app->get('/' . $language . '/todo', 'App\Controller\TodoController:index')->setName('todo');
+
 // Language
 $app->get('/language/' . $language . '', 'App\Controller\LanguageController:language')->setName("language");
 
