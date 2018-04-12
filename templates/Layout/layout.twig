@@ -52,6 +52,10 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ path_for('root', { 'language': language }) }}"
                                       class="nav-link">{{ __('Home') }}</a></li>
+                {% if user.role %}
+                    <li><a href="{{ path_for('todo', { 'language': language }) }}"
+                           class="nav-link">{{ __('Todo') }}</a></li>
+                {% endif %}
                 {% if user.role == 'ROLE_ADMIN' %}
                     <li><a href="{{ path_for('userList', { 'language': language }) }}"
                            class="nav-link">{{ __('Users') }}</a></li>
