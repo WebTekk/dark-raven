@@ -47,7 +47,7 @@ class UserController extends AppController
             'page' => 'Users',
         ];
 
-        return $this->render($request, $response, 'User/userList.twig', $viewData);
+        return $this->render($request, $response, 'User/user-list.twig', $viewData);
     }
 
     /**
