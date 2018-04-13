@@ -18,7 +18,6 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/mustache.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/vue.js"></script>
     <script src="js/script.js"></script>
     <script src="js/notifIt.min.js"></script>
     <link rel="stylesheet" href="css/notifIt.min.css">
@@ -52,11 +51,7 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ path_for('root', { 'language': language }) }}"
                                       class="nav-link">{{ __('Home') }}</a></li>
-                {% if user.role %}
-                    <li><a href="{{ path_for('todo', { 'language': language }) }}"
-                           class="nav-link">{{ __('Todo') }}</a></li>
-                {% endif %}
-                {% if user.role == 'ROLE_ADMIN' %}
+               {% if user.role == 'ROLE_ADMIN' %}
                     <li><a href="{{ path_for('userList', { 'language': language }) }}"
                            class="nav-link">{{ __('Users') }}</a></li>
                 {% endif %}

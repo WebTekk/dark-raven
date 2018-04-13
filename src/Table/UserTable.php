@@ -13,7 +13,7 @@ class UserTable extends AbstractTable
     /**
      * @var string Table
      */
-    protected $table = 'users';
+    protected $table = 'user';
 
     /**
      * Add user.
@@ -26,8 +26,6 @@ class UserTable extends AbstractTable
     {
         $values = [
             'username' => $user['username'],
-            'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
             'email' => $user['email'],
             'password' => password_hash($user['password'], PASSWORD_DEFAULT),
         ];
@@ -61,13 +59,13 @@ class UserTable extends AbstractTable
     {
         $query = $this->newSelect();
         $selectors = [
-            'users.id',
-            'users.username',
-            'users.password',
-            'roles.role',
+            'user.id',
+            'user.username',
+            'user.password',
+            'role.role',
         ];
         $query->select($selectors)
-            ->leftJoin('roles', ['users.role_id = roles.id'])
+            ->leftJoin('role', ['user.role_id = role.id'])
             ->where(['username' => $username, 'active' => 1]);
         $row = $query->execute()->fetch('assoc');
         if (empty($row)) {
@@ -87,16 +85,14 @@ class UserTable extends AbstractTable
     {
         $query = $this->newSelect();
         $selectors = [
-            'users.id',
-            'users.username',
-            'users.email',
-            'users.first_name',
-            'users.last_name',
-            'roles.role',
-            'roles.title AS role_name',
+            'user.id',
+            'user.username',
+            'user.email',
+            'role.role',
+            'role.title AS role_name',
         ];
         $query->select($selectors)
-            ->leftJoin('roles', ['users.role_id = roles.id'])
+            ->leftJoin('role', ['user.role_id = role.id'])
             ->where(['active' => 1]);
         $rows = $query->execute()->fetchAll('assoc');
         $users = [];
@@ -115,10 +111,22 @@ class UserTable extends AbstractTable
      *
      * @return void
      */
-    public function updateRole($id, $role)
+    public function updateRole($id, $role): void
     {
-        $query = $this->db->newQuery()->from('roles')->select('id')->where(['role' => $role]);
+        $query = $this->db->newQuery()->from('role')->select('id')->where(['role' => $role]);
         $roleId = $query->execute()->fetch('assoc')['id'];
         $this->db->update($this->table, ['role_id' => $roleId], ['id' => $id]);
+    }
+
+    /**
+     * Get all roles
+     *
+     * @return array
+     */
+    public function getAllRoles(): array
+    {
+        $query = $this->db->newQuery()->from('role')->select('*');
+        $roles = $query->execute()->fetchAll('assoc');
+        return $roles;
     }
 }

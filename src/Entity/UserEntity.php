@@ -33,16 +33,6 @@ class UserEntity extends AbstractEntity
     public $email;
 
     /**
-     * @var string First name
-     */
-    public $firstName;
-
-    /**
-     * @var string Last name
-     */
-    public $lastName;
-
-    /**
      * @var string Created at
      */
     public $createdAt;

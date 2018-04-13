@@ -58,7 +58,7 @@ class UserController extends AppController
      *
      * @return Response
      */
-    public function loadAllUsers(Request $request, Response $response): Response
+    public function loadData(Request $request, Response $response): Response
     {
         $userService = new UserService($this->db);
         $users = $userService->loadAllUsers();
@@ -66,8 +66,13 @@ class UserController extends AppController
         foreach ($users as $user) {
             $usersArray[] = $user->toArray();
         }
+
+        $userTable = new UserTable($this->db);
+        $roles = $userTable->getAllRoles();
+
         $viewData = [
             'users' => $usersArray,
+            'roles' => $roles,
         ];
 
         return $response->withJson(json_encode($viewData));

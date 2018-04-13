@@ -9,17 +9,10 @@ $app->get('/' . $language . '/login', 'App\Controller\AuthenticationController:i
 $app->post('/' . $language . '/login', 'App\Controller\AuthenticationController:login')->setName('postLogin');
 $app->get('/' . $language . '/logout', 'App\Controller\AuthenticationController:logout')->setName('logout');
 
-// Register
-$app->get('/' . $language . '/register', 'App\Controller\RegisterController:index')->setName('getRegister');
-$app->post('/' . $language . '/register', 'App\Controller\RegisterController:register')->setName('postRegister');
-
 // User list
 $app->get('/' . $language . '/users', 'App\Controller\UserController:index')->setName('userList');
-$app->get('/' . $language . '/users/load', 'App\Controller\UserController:loadAllUsers')->setName('loadUsers');
+$app->get('/' . $language . '/users/load', 'App\Controller\UserController:loadData')->setName('loadData');
 $app->put('/' . $language . '/users/role', 'App\Controller\UserController:updateRole')->setName('putUserRole');
-
-// To do
-$app->get('/' . $language . '/todo', 'App\Controller\TodoController:index')->setName('todo');
 
 // Language
 $app->get('/language/' . $language . '', 'App\Controller\LanguageController:language')->setName("language");

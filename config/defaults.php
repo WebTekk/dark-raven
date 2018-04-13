@@ -1,17 +1,15 @@
 <?php
 
-use App\Adapter\MailerInterface;
 use Aura\Session\Session;
 use Symfony\Component\Translation\Translator;
 
 $config = [];
 
-$applicationName = 'slim';
+$applicationName = 'DarkRaven';
 
 $config = [
-    'displayErrorDetails' => false,
+    'displayErrorDetails' => true,
     'determineRouteBeforeAppMiddleware' => true,
-//'addContentLengthHeader' => false,
 ];
 
 $config[Session::class] = [
@@ -27,7 +25,7 @@ $config[Translator::class] = [
 $config['migrations'] = __DIR__ . '/../resources/migrations';
 
 $config['db'] = [
-    'database' => 'slim',
+    'database' => 'dark_raven',
     'charset' => 'utf8',
     'encoding' => 'utf8',
     'collation' => 'utf8_unicode_ci',
@@ -35,7 +33,7 @@ $config['db'] = [
 ];
 
 $config['db_test'] = [
-    'database' => 'slim_test',
+    'database' => 'test',
     'charset' => 'utf8',
     'encoding' => 'utf8',
     'collation' => 'utf8_unicode_ci',
@@ -57,7 +55,7 @@ $config['twig'] = [
 ];
 
 $config['session'] = [
-    'name' => 'slim',
+    'name' => 'dark-raven',
     'autorefresh' => true,
     'lifetime' => '2 hours',
     'path' => '/', //default
