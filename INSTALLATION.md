@@ -2,8 +2,12 @@
 
 ## Fresh installation
 
-### SQL
+### File system
+- Rename `example.env.php` to `env.php`
+- Configure database settings in `env.php`
+- Run `composer install` in the command line
 
+### SQL
 ```
 CREATE SCHEMA `dark_raven` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE dark_raven;
