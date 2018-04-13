@@ -38,5 +38,5 @@ INSERT INTO `dark_raven`.`user` (`username`, `password`, `role_id`, `email`) VAL
 ```
 
 ### Test user
-User - Username: testuser, Password: test1234\
+User - Username: testuser, Password: test1234
 Admin - Username: testadmin, Password: test1234
