@@ -1,0 +1,13 @@
+.todo-element {
+    font-size: 2em;
+    padding: 5px;
+}
+
+.todo-element:hover {
+    background-color: lightgrey;
+}
+
+.input-group-addon {
+    min-width:80px;
+text-align:left;
+}

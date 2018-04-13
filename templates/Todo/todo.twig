@@ -2,10 +2,27 @@
 
 {% block assets %}
     {{ assets({files: ['Todo/todo.js'], name: 'todo.js'}) }}
+    {{ assets({files: ['Todo/todo.css'], name: 'todo.css'}) }}
 {% endblock %}
 
 {% block content %}
 
-<h1>{{ __('TODO\'s') }}</h1>
+    <h1>{{ __('TODO\'s') }}</h1>
+
+    {# list todos #}
+    <div class="col-md-10 col-md-offset-1">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default active" aria-label="open" id="show-open">
+                {{ __('open') }}
+            </button>
+            <button type="button" class="btn btn-default" aria-label="resolved" id="show-resolved">
+                {{ __('resolved') }}
+            </button>
+        </div>
+        <button type="button" class="btn btn-success col-md-offset-10" aria-label="add" id="add-todo">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+        {{ source('Todo/todo.vue') }}
+    </div>
 
 {% endblock %}
