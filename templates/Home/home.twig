@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ __('Tekk\'s homepage') }}</h1>
-    {% if user.username %}
-        <h3>{{ __('Welcome, %s', user.username ) }}</h3>
-    {% else %}
-        <h3>{{ __('Welcome, Guest' ) }}</h3>
-    {% endif %}
+    <div class="sub-header">
+        <h1 class="header-center">{{ __('DarkRaven') }}</h1>
+    </div>
+    <div class="join-us col-md-8 col-md-offset-1">
+        <h3>{{ __('Join us!') }}</h3>
+        <p>{{ __('We have a Discord server!') }}</p>
+    </div>
+    <iframe src="https://discordapp.com/widget?id=312701240385601547&theme=dark" width="350" height="400"
+            allowtransparency="true" frameborder="0" class="col-md-2 discord-frame"></iframe>
 {% endblock %}

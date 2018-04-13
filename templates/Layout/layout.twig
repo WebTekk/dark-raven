@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#222222">
-    <meta name="author" content="Marc Wilhelm">
-    <meta name="description" content="A Slim template">
-    <meta name="keywords" content="Slim, template">
-    <meta name="robots" content="nofollow">
+    <meta name="author" content="LordTekk">
+    <meta name="description" content="DarkRaven website">
+    <meta name="keywords" content="DarkRaven">
     <base href="{{ path_for('root') }}">
     <meta name="xhr-baseurl" content="{{ path_for('root', { 'language': language }) }}">
     <link rel="canonical" href="{{ canonical }}"/>
@@ -42,7 +41,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Tekk</a>
+            <a class="navbar-brand" href="{{ path_for('root', { 'language': language }) }}">DarkRaven</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

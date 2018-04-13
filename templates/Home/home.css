@@ -1,11 +1,19 @@
-.cssIsAwesomeBox {
-    height: 250px;
-    width: 250px;
-    border: 2px solid black;
+.header-center {
+    padding-top: 5%;
+    text-align: center;
+    font-size: 12em;
+    color: #222222;
 }
 
-.cssIsAwesomeText {
-    font-size: 30pt;
-    white-space: nowrap;
-    padding-left: 15px;
+.sub-header {
+    height: 500px;
+}
+
+.join-us {
+    padding-top: 20px;
+}
+
+.discord-frame {
+    margin-top: 20px;
+    margin-bottom: 80px;
 }
