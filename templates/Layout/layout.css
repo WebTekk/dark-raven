@@ -1,7 +1,10 @@
-.content {
-    /*padding-left: 15px;*/
-    /*padding-right: 15px;*/
-    margin-top: 50px;
+body {
+    background-color: #18191C;
+    color: #E6EBF4;
+}
+
+h1 {
+    font-size: 12em;
 }
 
 h3 {
@@ -10,6 +13,12 @@ h3 {
 
 p {
     font-size: 2em;
+}
+
+.content {
+    /*padding-left: 15px;*/
+    /*padding-right: 15px;*/
+    margin-top: 50px;
 }
 
 /* ############ Start loader ############## */
