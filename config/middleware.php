@@ -19,20 +19,24 @@ $app->add(function (Request $request, Response $response, $next) use ($container
         'postLogin',
         'language',
         'notFound',
-        'getRegister',
-        'postRegister',
         'logout',
     ];
     $authorizationRoutes = [
-        'getRegister',
-        'postRegister',
         'getLogin',
         'postLogin',
+    ];
+    $adminRoutes = [
+        'userList',
+        'loadData',
+        'putUserRole',
     ];
     $segment = $session->getSegment('session');
     $role = $segment->get('role');
     if ($role && in_array($routeName, $authorizationRoutes)) {
         return $response->withRedirect($this->router->pathFor('notFound', ['language' => $locale]));
+    }
+    if (!empty($role) && !in_array($routeName, $adminRoutes)) {
+        return $next($request, $response);
     }
     if ($role !== 'ROLE_ADMIN' && !in_array($routeName, $publicRoutes)) {
         return $response->withRedirect($this->router->pathFor('notFound', ['language' => $locale]));

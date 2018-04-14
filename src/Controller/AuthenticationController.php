@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\Authentication\AuthenticationService;
+use App\Service\ChangePassword\ChangePasswordService;
 use Aura\Session\Session;
 use Cake\Database\Connection;
 use Interop\Container\Exception\ContainerException;
@@ -78,7 +79,19 @@ class AuthenticationController extends AppController
 
             return $response->withJson(json_encode($viewData));
         }
+
+        $changePasswordService = new ChangePasswordService($this->db);
         $authenticationService->loginUser($data['username']);
+        if ($changePasswordService->mustChangePassword($data['username'])) {
+            $viewData = [
+                'page' => 'Login',
+                'success' => true,
+                'changePassword' => true,
+            ];
+
+            return $response->withJson(json_encode($viewData));
+        }
+
         $viewData = [
             'page' => 'Login',
             'success' => true,

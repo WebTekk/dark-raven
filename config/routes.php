@@ -9,6 +9,9 @@ $app->get('/' . $language . '/login', 'App\Controller\AuthenticationController:i
 $app->post('/' . $language . '/login', 'App\Controller\AuthenticationController:login')->setName('postLogin');
 $app->get('/' . $language . '/logout', 'App\Controller\AuthenticationController:logout')->setName('logout');
 
+// Change password
+$app->get('/' . $language . '/change-password', 'App\Controller\ChangePasswordController:index')->setName('changePassword');
+
 // User list
 $app->get('/' . $language . '/users', 'App\Controller\UserController:index')->setName('userList');
 $app->get('/' . $language . '/users/load', 'App\Controller\UserController:loadData')->setName('loadData');

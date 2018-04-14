@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2018-04-14 01:51+0200\n"
-"PO-Revision-Date: 2018-04-14 01:52+0200\n"
+"PO-Revision-Date: 2018-04-14 12:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -76,7 +76,7 @@ msgstr "Englisch"
 
 #: tmp/cache/twig/89/89e3b9e3665b1774a8b277602221014dbec4b6f5567b0a5bb6fb60ef726f3cdf.php:142
 msgid "German"
-msgstr "Deutshc"
+msgstr "Deutsch"
 
 #: tmp/cache/twig/89/89e3b9e3665b1774a8b277602221014dbec4b6f5567b0a5bb6fb60ef726f3cdf.php:152
 msgid "Logout"

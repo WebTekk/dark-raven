@@ -129,4 +129,17 @@ class UserTable extends AbstractTable
         $roles = $query->execute()->fetchAll('assoc');
         return $roles;
     }
+
+    /**
+     * Check if user has to change his password
+     *
+     * @param int $id User id
+     * @return int
+     */
+    public function getChangePassword(int $id): int
+    {
+        $query = $this->db->newQuery()->from('user')->select('change_password')->where(['id' => $id]);
+        $result = $query->execute()->fetch('assoc');
+        return $result['change_password'];
+    }
 }

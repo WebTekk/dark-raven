@@ -26,6 +26,7 @@ CREATE TABLE `dark_raven`.`user` (
   `role_id` INT NULL,
   `email` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `change_password` INT NULL DEFAULT 1,
   `active` INT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`role_id`) references role(`id`)
@@ -33,10 +34,10 @@ CREATE TABLE `dark_raven`.`user` (
 
 INSERT INTO `dark_raven`.`role` (`id`, `role`, `title`) VALUES (1, 'ROLE_MEMBER', 'Member');
 INSERT INTO `dark_raven`.`role` (`id`, `role`, `title`) VALUES (2, 'ROLE_ADMIN', 'Admin');
-INSERT INTO `dark_raven`.`user` (`username`, `password`, `role_id`, `email`) VALUES ('testuser', '$2y$10$ZHNhkjhQAO2Bx0BU90P8WOAv94nbCL2SA.7PP4wpD8F8Wf4GIlXbW', '1', 'user@test.ch');
-INSERT INTO `dark_raven`.`user` (`username`, `password`, `role_id`, `email`) VALUES ('testadmin', '$2y$10$ZHNhkjhQAO2Bx0BU90P8WOAv94nbCL2SA.7PP4wpD8F8Wf4GIlXbW', '2', 'admin@test.ch');
+INSERT INTO `dark_raven`.`user` (`username`, `password`, `role_id`, `email`, `change_password`) VALUES ('testuser', '$2y$10$ZHNhkjhQAO2Bx0BU90P8WOAv94nbCL2SA.7PP4wpD8F8Wf4GIlXbW', '1', 'user@test.ch', 1);
+INSERT INTO `dark_raven`.`user` (`username`, `password`, `role_id`, `email`, `change_password`) VALUES ('testadmin', '$2y$10$ZHNhkjhQAO2Bx0BU90P8WOAv94nbCL2SA.7PP4wpD8F8Wf4GIlXbW', '2', 'admin@test.ch', 0);
 ```
 
 ### Test user
-User - Username: testuser, Password: test1234
-Admin - Username: testadmin, Password: test1234
+User - Username: testuser, Password: test1234, PW-reset: true
+Admin - Username: testadmin, Password: test1234, PW-reset: false

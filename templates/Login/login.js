@@ -50,7 +50,10 @@ var Login = function () {
             data: JSON.stringify(requestData)
         }).done(function (json) {
             var data = JSON.parse(json);
-            if(data.success === true) {
+            if (data.changePassword === true) {
+                console.log(baseurl() + '/change-password');
+                $( location ).attr("href", baseurl() + '/change-password');
+            } else if(data.success === true) {
                 $( location ).attr("href", baseurl());
             } else {
                 username.closest('.form-group').addClass('has-error');
