@@ -33,7 +33,10 @@ $app->add(function (Request $request, Response $response, $next) use ($container
     $segment = $session->getSegment('session');
     $role = $segment->get('role');
 
-    if (!empty($role) && !in_array($routeName, $adminRoutes) && in_array($routeName, $authorizationRoutes)) {
+    if (in_array($routeName, $publicRoutes)) {
+        return $next($request, $response);
+    }
+    if (!empty($role) && !in_array($routeName, $adminRoutes) && !in_array($routeName, $authorizationRoutes)) {
         return $next($request, $response);
     }
     if ($role !== 'ROLE_ADMIN' && in_array($routeName, $authorizationRoutes)) {
