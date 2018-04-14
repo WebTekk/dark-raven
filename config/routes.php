@@ -10,7 +10,8 @@ $app->post('/' . $language . '/login', 'App\Controller\AuthenticationController:
 $app->get('/' . $language . '/logout', 'App\Controller\AuthenticationController:logout')->setName('logout');
 
 // Change password
-$app->get('/' . $language . '/change-password', 'App\Controller\ChangePasswordController:index')->setName('changePassword');
+$app->get('/' . $language . '/change-password', 'App\Controller\ChangePasswordController:index')->setName('loadChangePassword');
+$app->post('/' . $language . '/change-password', 'App\Controller\ChangePasswordController:changePassword')->setName('changePassword');
 
 // User list
 $app->get('/' . $language . '/users', 'App\Controller\UserController:index')->setName('userList');

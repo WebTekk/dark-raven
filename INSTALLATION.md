@@ -3,7 +3,7 @@
 ## Fresh installation
 
 ### File system
-- Rename `example.env.php` to `env.php`
+- Rename `config/example.env.php` to `config/env.php`
 - Configure database settings in `env.php`
 - Run `composer install` in the command line
 
@@ -39,5 +39,5 @@ INSERT INTO `dark_raven`.`user` (`username`, `password`, `role_id`, `email`, `ch
 ```
 
 ### Test user
-User - Username: testuser, Password: test1234, PW-reset: true
-Admin - Username: testadmin, Password: test1234, PW-reset: false
+- User - Username: testuser, Password: test1234, PW-reset: true
+- Admin - Username: testadmin, Password: test1234, PW-reset: false

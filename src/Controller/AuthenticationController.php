@@ -80,7 +80,7 @@ class AuthenticationController extends AppController
             return $response->withJson(json_encode($viewData));
         }
 
-        $changePasswordService = new ChangePasswordService($this->db);
+        $changePasswordService = new ChangePasswordService($this->db, $this->session);
         $authenticationService->loginUser($data['username']);
         if ($changePasswordService->mustChangePassword($data['username'])) {
             $viewData = [

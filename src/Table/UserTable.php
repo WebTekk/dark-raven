@@ -142,4 +142,22 @@ class UserTable extends AbstractTable
         $result = $query->execute()->fetch('assoc');
         return $result['change_password'];
     }
+
+    /**
+     * Get password by id
+     *
+     * @param int $id Id
+     * @return mixed
+     */
+    public function getPasswordById(int $id)
+    {
+        $query = $this->db->newQuery()->from('user')->select('password')->where(['id' => $id]);
+        $result = $query->execute()->fetch('assoc');
+        return $result['password'];
+    }
+
+    public function changePassword(int $id, string $password)
+    {
+        $this->db->update('user', ['password' => $password, 'change_password' => 0], ['id' => $id]);
+    }
 }

@@ -32,13 +32,11 @@ $app->add(function (Request $request, Response $response, $next) use ($container
     ];
     $segment = $session->getSegment('session');
     $role = $segment->get('role');
-    if ($role && in_array($routeName, $authorizationRoutes)) {
-        return $response->withRedirect($this->router->pathFor('notFound', ['language' => $locale]));
-    }
-    if (!empty($role) && !in_array($routeName, $adminRoutes)) {
+
+    if (!empty($role) && !in_array($routeName, $adminRoutes) && in_array($routeName, $authorizationRoutes)) {
         return $next($request, $response);
     }
-    if ($role !== 'ROLE_ADMIN' && !in_array($routeName, $publicRoutes)) {
+    if ($role !== 'ROLE_ADMIN' && in_array($routeName, $authorizationRoutes)) {
         return $response->withRedirect($this->router->pathFor('notFound', ['language' => $locale]));
     }
 
