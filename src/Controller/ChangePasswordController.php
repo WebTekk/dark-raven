@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Service\ChangePassword\ChangePasswordService;
 use Aura\Session\Session;
 use Cake\Database\Connection;
