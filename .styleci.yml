@@ -10,8 +10,6 @@ enabled:
   - phpdoc_scalar
   - phpdoc_types
 
-linting: true
-
 finder:
   name:
     - "*.php"
